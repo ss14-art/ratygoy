@@ -292,7 +292,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
                 null,
                 new Dictionary<NetEntity, List<DockingPortState>>(),
                 ShuttleDampingMode.Normal,
-                _sectorWeather.GetWeatherSnapshot());
+                _sectorWeather.GetHazardWeatherSnapshot());
             mapState = new ShuttleMapInterfaceState(
                 FTLState.Invalid,
                 default,
@@ -414,7 +414,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         }
 
         if (!Resolve(entity, ref entity.Comp1, ref entity.Comp2))
-            return new NavInterfaceState(entity.Comp1!.MaxRange, null, null, docks, damping, _sectorWeather.GetWeatherSnapshot());
+            return new NavInterfaceState(entity.Comp1!.MaxRange, null, null, docks, damping, _sectorWeather.GetHazardWeatherSnapshot());
 
         return GetNavState(
             entity,
@@ -437,7 +437,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         }
 
         if (!Resolve(entity, ref entity.Comp1, ref entity.Comp2))
-            return new NavInterfaceState(entity.Comp1!.MaxRange, GetNetCoordinates(coordinates), angle, docks, damping, _sectorWeather.GetWeatherSnapshot());
+            return new NavInterfaceState(entity.Comp1!.MaxRange, GetNetCoordinates(coordinates), angle, docks, damping, _sectorWeather.GetHazardWeatherSnapshot());
 
         return new NavInterfaceState(
             entity.Comp1.MaxRange,
@@ -445,7 +445,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
             angle,
             docks,
             damping,
-            _sectorWeather.GetWeatherSnapshot());
+            _sectorWeather.GetHazardWeatherSnapshot());
     }
 
     /// <summary>

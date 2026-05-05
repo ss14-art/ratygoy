@@ -50,6 +50,10 @@ public sealed class SharedSectorSystem : EntitySystem
     /// </summary>
     public string GetSectorName(SpaceSector sector)
     {
+        var overrideName = _configuration.GetCVar(GetSectorNameCVar(sector));
+        if (!string.IsNullOrWhiteSpace(overrideName))
+            return overrideName;
+
         return Loc.GetString(sector switch
         {
             SpaceSector.Center => "sector-center",
@@ -63,5 +67,22 @@ public sealed class SharedSectorSystem : EntitySystem
             SpaceSector.NorthWest => "sector-northwest",
             _ => throw new ArgumentOutOfRangeException(nameof(sector), sector, null),
         });
+    }
+
+    public static CVarDef<string> GetSectorNameCVar(SpaceSector sector)
+    {
+        return sector switch
+        {
+            SpaceSector.Center => CCVars.SectorNameCenter,
+            SpaceSector.North => CCVars.SectorNameNorth,
+            SpaceSector.NorthEast => CCVars.SectorNameNorthEast,
+            SpaceSector.East => CCVars.SectorNameEast,
+            SpaceSector.SouthEast => CCVars.SectorNameSouthEast,
+            SpaceSector.South => CCVars.SectorNameSouth,
+            SpaceSector.SouthWest => CCVars.SectorNameSouthWest,
+            SpaceSector.West => CCVars.SectorNameWest,
+            SpaceSector.NorthWest => CCVars.SectorNameNorthWest,
+            _ => throw new ArgumentOutOfRangeException(nameof(sector), sector, null),
+        };
     }
 }
