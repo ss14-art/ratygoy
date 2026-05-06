@@ -383,13 +383,11 @@ public abstract partial class SharedXenoArtifactSystem
 
         var artifact = _xenoArtifactQuery.Get(nodeComponent.Attached.Value);
 
-        var nonactiveNodes = GetActiveNodes(artifact);
         var durabilityEffect = MathF.Pow((float)nodeComponent.Durability / nodeComponent.MaxDurability, 2);
-        var durabilityMultiplier = nonactiveNodes.Contains(node)
-            ? 1f - durabilityEffect
-            : 1f + durabilityEffect;
+        var durabilityMultiplier = nodeComponent.DurabilityResearchMultiplier - (nodeComponent.DurabilityResearchMultiplier - 1) * durabilityEffect;
 
         var predecessorNodes = GetPredecessorNodes((artifact, artifact), node);
-        nodeComponent.ResearchValue = (int)(Math.Pow(1.25, Math.Pow(predecessorNodes.Count, 1.5f)) * nodeComponent.BasePointValue * durabilityMultiplier);
+        var predecessorMultiplier = Math.Pow(1.25, Math.Pow(predecessorNodes.Count, 1.5f));
+        nodeComponent.ResearchValue = (int)(nodeComponent.BasePointValue * predecessorMultiplier * durabilityMultiplier);
     }
 }
