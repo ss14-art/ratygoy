@@ -1,0 +1,8 @@
+- type: reaction
+  id: phoron-decay
+  minTemp: 500
+  reactants:
+    Phoron:
+      amount: 1
+  products:
+    Plasma: 1

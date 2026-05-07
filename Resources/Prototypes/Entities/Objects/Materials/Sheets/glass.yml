@@ -407,6 +407,8 @@
           Quantity: 8
         - ReagentId: Titanium
           Quantity: 4
+        - ReagentId: Phoron
+          Quantity: .2 # 5 phoron glass to 1 Phoron reagent
         canReact: false
 
 - type: entity
@@ -490,6 +492,8 @@
           Quantity: 4.5
         - ReagentId: Carbon
           Quantity: 0.5
+        - ReagentId: Phoron
+          Quantity: 0.2
         canReact: false
 
 - type: entity

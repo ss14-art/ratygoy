@@ -370,7 +370,7 @@ public abstract partial class SharedXenoArtifactSystem
 
     /// <summary>
     /// Sets node research point amount that can be extracted.
-    /// Used up durability increases amount to be extracted.
+    /// Used up durability increases amount to be extracted. (It looks like the exact opposite is true?)
     /// </summary>
     public void UpdateNodeResearchValue(Entity<XenoArtifactNodeComponent> node)
     {
@@ -383,6 +383,7 @@ public abstract partial class SharedXenoArtifactSystem
 
         var artifact = _xenoArtifactQuery.Get(nodeComponent.Attached.Value);
 
+        var nonactiveNodes = GetActiveNodes(artifact); // This seems like its... wrong...
         var durabilityEffect = MathF.Pow((float)nodeComponent.Durability / nodeComponent.MaxDurability, 2);
         var durabilityMultiplier = nodeComponent.DurabilityResearchMultiplier - (nodeComponent.DurabilityResearchMultiplier - 1) * durabilityEffect;
 

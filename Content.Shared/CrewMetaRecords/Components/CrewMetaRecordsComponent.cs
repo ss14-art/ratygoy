@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.CrewMetaRecords;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent]
 public sealed partial class CrewMetaRecordsComponent : Component
 {
     [DataField]
