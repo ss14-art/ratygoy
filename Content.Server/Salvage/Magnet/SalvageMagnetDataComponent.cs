@@ -35,7 +35,7 @@ public sealed partial class SalvageMagnetDataComponent : Component
     /// Cooldown between offerings after one ends.
     /// </summary>
     [DataField]
-    public TimeSpan OfferCooldown = TimeSpan.FromMinutes(3);
+    public TimeSpan OfferCooldown = TimeSpan.FromMinutes(15);
 
     /// <summary>
     /// Seeds currently offered
