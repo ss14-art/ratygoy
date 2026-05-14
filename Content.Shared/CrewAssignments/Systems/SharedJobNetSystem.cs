@@ -16,8 +16,9 @@ using static Robust.Shared.Physics.DynamicTree;
 
 namespace Content.Shared.CrewAssignments.Systems;
 
+// PERSISTENCE 2026/05/14 Class updated to not cause build fail
 [Virtual]
-public abstract partial class SharedJobNetSystem : EntitySystem
+public partial class SharedJobNetSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
