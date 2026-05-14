@@ -11,9 +11,7 @@ public interface IItemslotUIContainer
     public bool TryAddButton(SlotControl control);
 }
 
-// PERSISTENCE 2026/05/14 Class updated to not cause build fail
-[Virtual]
-public class ItemSlotUIContainer<T> : GridContainer, IItemslotUIContainer where T : SlotControl
+public abstract class ItemSlotUIContainer<T> : GridContainer, IItemslotUIContainer where T : SlotControl
 {
     private readonly Dictionary<string, T> _buttons = new();
 

@@ -224,14 +224,11 @@ public class RadialMenu : BaseWindow
     }
 }
 
-// PERSISTENCE 2026/05/14 Class updated to not cause build fail
-
 /// <summary>
 /// Base class for radial menu buttons. Excludes all actions except clicks and alt-clicks
 /// from interactions.
 /// </summary>
-[Virtual]
-public class RadialMenuButtonBase : BaseButton
+public abstract class RadialMenuButtonBase : BaseButton
 {
     /// <inheritdoc />
     protected RadialMenuButtonBase()

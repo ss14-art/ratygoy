@@ -9,9 +9,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.UserInterface.Controls
 {
-    // PERSISTENCE 2026/05/14 Class updated to not cause build fail
-    [Virtual]
-    public class SlotControl : Control, IEntityControl
+    public abstract class SlotControl : Control, IEntityControl
     {
         public static int DefaultButtonSize = 64;
 
