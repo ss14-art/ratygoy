@@ -69,6 +69,8 @@
     whitelist:
       components:
       - Item
+      tags:
+      - Recyclable
     blacklist:
       components:
       - Material
