@@ -1,9 +1,12 @@
 using System.Linq;
+using Content.Shared.Database;
 using Content.Shared.EntityTable;
 using Content.Shared.NameIdentifier;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Content.Shared.Xenoarchaeology.Artifact.Prototypes;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Xenoarchaeology.Artifact;
@@ -64,16 +67,17 @@ public abstract partial class SharedXenoArtifactSystem
     {
         if (!Resolve(ent, ref ent.Comp))
             return;
-
         SetNodeDurability(ent, ent.Comp.Durability + durabilityDelta);
     }
 
     /// <summary>
     /// Sets a node's durability to the specified value. HIGHLY recommended to not be less than 0.
     /// </summary>
-    public void SetNodeDurability(Entity<XenoArtifactNodeComponent?> ent, int durability)
+    public void SetNodeDurability(Entity<XenoArtifactNodeComponent?> ent, int durability, bool ignoreShatter = false)
     {
         if (!Resolve(ent, ref ent.Comp))
+            return;
+        if (ent.Comp.Shattered && !ignoreShatter)
             return;
 
         ent.Comp.Durability = Math.Clamp(durability, 0, ent.Comp.MaxDurability);
@@ -387,11 +391,31 @@ public abstract partial class SharedXenoArtifactSystem
 
         var artifact = _xenoArtifactQuery.Get(nodeComponent.Attached.Value);
 
-        var durabilityEffect = MathF.Pow((float)nodeComponent.Durability / nodeComponent.MaxDurability == 0 ? 1 : nodeComponent.MaxDurability, 2);
+        var maxDurability = nodeComponent.MaxDurability <= 0 ? 1 : nodeComponent.MaxDurability;
+        var durabilityEffect = MathF.Pow((float)nodeComponent.Durability / maxDurability, 2);
         var durabilityMultiplier = nodeComponent.DurabilityResearchMultiplier - (nodeComponent.DurabilityResearchMultiplier - 1) * durabilityEffect;
 
         var predecessorNodes = GetPredecessorNodes((artifact, artifact), node);
         var predecessorMultiplier = Math.Pow(1.25, Math.Pow(predecessorNodes.Count, 1.5f));
         nodeComponent.ResearchValue = (int)(nodeComponent.BasePointValue * predecessorMultiplier * durabilityMultiplier);
+    }
+
+    public void Shatter(Entity<XenoArtifactNodeComponent?> node)
+    {
+        if (!_net.IsServer)
+            return;
+
+        if (!Resolve(node, ref node.Comp))
+            return;
+
+        if (node.Comp.Shattered)
+            return;
+
+        node.Comp.ShatterPattern = RobustRandom.Pick(Enum.GetValues<ShatterPatternTypes>());
+        node.Comp.Durability = 0;
+        node.Comp.Shattered = true;
+
+        _audio.PlayPvs(node.Comp.ShatterSound, node.Owner);
+        Dirty(node);
     }
 }
