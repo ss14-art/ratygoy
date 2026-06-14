@@ -395,9 +395,9 @@ public abstract partial class SharedXenoArtifactSystem
         var durabilityEffect = MathF.Pow((float)nodeComponent.Durability / maxDurability, 2);
         var durabilityMultiplier = nodeComponent.DurabilityResearchMultiplier - (nodeComponent.DurabilityResearchMultiplier - 1) * durabilityEffect;
 
-        var predecessorNodes = GetPredecessorNodes((artifact, artifact), node);
-        var predecessorMultiplier = Math.Pow(1.25, Math.Pow(predecessorNodes.Count, 1.5f));
-        nodeComponent.ResearchValue = (int)(nodeComponent.BasePointValue * predecessorMultiplier * durabilityMultiplier);
+        var nodeDepth = node.Comp.Depth;
+        var depthMultipler = Math.Pow(1.5f, Math.Pow(nodeDepth, 1.5f));
+        nodeComponent.ResearchValue = (int)(nodeComponent.BasePointValue * depthMultipler * durabilityMultiplier);
     }
 
     public void Shatter(Entity<XenoArtifactNodeComponent?> node)
