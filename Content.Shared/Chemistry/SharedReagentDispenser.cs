@@ -117,11 +117,6 @@ namespace Content.Shared.Chemistry
     }
 
     [Serializable, NetSerializable]
-    public enum ReagentDispenserVisualState : byte
-    {
-        BeakerAttached
-    }
-    [Serializable, NetSerializable]
     public sealed class ReagentDispenserBoundUserInterfaceState : BoundUserInterfaceState
     {
         public readonly ContainerInfo? OutputContainer;
