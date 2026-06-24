@@ -1,0 +1,12 @@
+- type: latheRecipe
+  abstract: true
+  id: BasePlushieRecipe
+  completetime: 5
+  materials:
+    Cloth: 100
+    Cotton: 300
+
+- type: latheRecipe
+  parent: BasePlushieRecipe
+  id: PlushieNuke
+  result: PlushieNuke
