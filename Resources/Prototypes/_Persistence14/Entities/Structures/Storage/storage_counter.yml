@@ -1,8 +1,10 @@
 - type: entity
-  id: BaseStorageCounter
+  id: StorageCounter
   parent: TableCounterWood
   name: Storage Counter
-  description: A counter with storage capacity
+  description: |-
+    A counter with storage capacity.
+    (Use with a handlabeler for better usage)
   components:
   - type: Sprite
     sprite: _Persistence14/Structures/storage/storage-counter.rsi
@@ -30,3 +32,33 @@
   - type: Tag
     tags: 
     - StorageCounter
+  - type: Construction
+    graph: StorageCounterGraph
+    node: storagecounter
+
+- type: entity
+  id: StorageCounterFrame
+  parent: BaseStructure
+  name: Frame Storage Counter
+  description: An unfinished storage counter
+  components:
+  - type: Sprite
+    sprite: _Persistence14/Structures/storage/storage-counter.rsi
+    layers:
+    - state: frame-step0
+      map: ["enum.ConstructionVisuals.Layer"]
+  - type: Icon
+    sprite: _Persistence14/Structures/storage/storage-counter.rsi
+    state: frame-step0
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ConstructionVisuals.Key:
+        enum.ConstructionVisuals.Layer:
+          frame-step0: { state: frame-step0 }
+          frame-step1: { state: frame-step1 }
+          frame-step2: { state: frame-step2 }
+          frame-step3: { state: frame-step3 }
+  - type: Construction
+    graph: StorageCounterGraph
+    node: frame-step0

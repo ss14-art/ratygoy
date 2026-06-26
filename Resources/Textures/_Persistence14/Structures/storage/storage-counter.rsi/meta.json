@@ -17,7 +17,7 @@
       "name": "frame-step2"
     },
     {
-      "name": "frame-step3","directions": 4
+      "name": "frame-step3"
     },
     {
       "name": "white"
@@ -53,11 +53,6 @@
     {
       "name": "white7",
       "directions": 4
-    },
-    {
-      "name": "state_0",
-      "directions": 4
-    },
-    {
+    }
   ]
 }
