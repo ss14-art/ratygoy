@@ -518,6 +518,11 @@
 
 - type: latheRecipe
   parent: [ BaseCircuitboardRecipe, BaseGeneralMachineRecipeCategory ]
+  id: PlushieLatheCircuitboard
+  result: PlushieLatheCircuitboard
+
+- type: latheRecipe
+  parent: [ BaseCircuitboardRecipe, BaseGeneralMachineRecipeCategory ]
   id: SheetifierMachineCircuitboard
   result: SheetifierMachineCircuitboard
 
