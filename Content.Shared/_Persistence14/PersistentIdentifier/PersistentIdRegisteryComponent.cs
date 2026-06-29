@@ -9,18 +9,18 @@ public sealed partial class PersistentIdRegisterComponent : Component
     /// A runtime register of registered entities allowing for faster lookup.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    private Dictionary<Guid, Entity<PersistentIdentifierComponent>> _registeredEntities = new();
+    private Dictionary<string, Entity<PersistentIdentifierComponent>> _registeredEntities = new();
 
     /// <summary>
     /// Verifies the existance of a valid entity within the register matching a provided key.
     /// </summary>
-    public bool Contains(Guid id, IEntityManager entMan) => TryGet(id, out _, entMan);
+    public bool Contains(string id, IEntityManager entMan) => TryGet(id, out _, entMan);
 
     /// <summary>
     /// Attempts to retrieve a valid entity matching a provided key from the register.<br/>
     /// Culls any stale references that either do not exist or do not contain the required components/state.
     /// </summary>
-    public bool TryGet(Guid id, out Entity<PersistentIdentifierComponent> ent, IEntityManager entMan)
+    public bool TryGet(string id, out Entity<PersistentIdentifierComponent> ent, IEntityManager entMan)
     {
         ent = default!;
 
@@ -45,7 +45,7 @@ public sealed partial class PersistentIdRegisterComponent : Component
         var ids = _registeredEntities.Keys;
         bool cullAny = false;
 
-        List<Guid> staleIds = new();
+        List<string> staleIds = new();
 
         foreach (var id in ids)
         {
@@ -69,7 +69,7 @@ public sealed partial class PersistentIdRegisterComponent : Component
     /// </summary>
     public bool TryRegister(Entity<PersistentIdentifierComponent> ent, IEntityManager entMan)
     {
-        if (Contains(ent.Comp.Id, entMan) || ent.Comp.Id == Guid.Empty) return false;
+        if (Contains(ent.Comp.Id, entMan) || !ent.Comp.IdInit) return false;
 
         _registeredEntities[ent.Comp.Id] = ent;
         return true;
@@ -79,7 +79,7 @@ public sealed partial class PersistentIdRegisterComponent : Component
     /// Attempts to remove an ID from the register.
     /// Returns true if the ID was successfully removed, otherwise false.
     /// </summary>
-    public bool TryUnregister(Guid id) => _registeredEntities.Remove(id);
+    public bool TryUnregister(string id) => _registeredEntities.Remove(id);
 
     /// <summary>
     /// Attempts to remove a <see cref="PersistentIdentifierComponent"/> from the register. 

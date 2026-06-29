@@ -1,3 +1,4 @@
+using Content.Shared._Persistence14.PersistentIdentifier;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
@@ -28,6 +29,10 @@ public sealed class SwapTeleporterSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly PersistentIdentifierSystem _pid = default!;
+    [Dependency] private readonly ILogManager _log = default!;
+
+    public const string Sawmill = "Swap Teleport";
 
     private EntityQuery<TransformComponent> _xformQuery;
 
@@ -39,7 +44,6 @@ public sealed class SwapTeleporterSystem : EntitySystem
         SubscribeLocalEvent<SwapTeleporterComponent, ActivateInWorldEvent>(OnActivateInWorld);
         SubscribeLocalEvent<SwapTeleporterComponent, ExaminedEvent>(OnExamined);
 
-        SubscribeLocalEvent<SwapTeleporterComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<SwapTeleporterComponent, ComponentInit>(OnComponentInit);
 
         _xformQuery = GetEntityQuery<TransformComponent>();
@@ -48,6 +52,9 @@ public sealed class SwapTeleporterSystem : EntitySystem
     private void OnComponentInit(EntityUid uid, SwapTeleporterComponent comp, ref ComponentInit args)
     {
         UpdateAppearance(uid, comp);
+
+        if (!HasComp<PersistentIdentifierComponent>(uid))
+            MigrateKeys((uid, comp));
     }
 
     private void OnInteract(Entity<SwapTeleporterComponent> ent, ref AfterInteractEvent args)
@@ -67,20 +74,20 @@ public sealed class SwapTeleporterSystem : EntitySystem
             return;
         }
 
-        if (comp.Key != null)
+        if (comp.HasKey)
         {
             _popup.PopupClient(Loc.GetString("swap-teleporter-popup-link-fail-already"), uid, args.User);
             return;
         }
 
-        if (targetComp.Key != null)
+        if (targetComp.HasKey)
         {
             _popup.PopupClient(Loc.GetString("swap-teleporter-popup-link-fail-already-other"), uid, args.User);
             return;
         }
 
-        comp.Key = GetUniqueBeaconKey();
-        targetComp.Key = comp.Key;
+        comp.Key = _pid.EnsureId(target);
+        targetComp.Key = _pid.EnsureId(uid);
 
         Dirty(uid, comp);
         Dirty(target, targetComp);
@@ -217,7 +224,7 @@ public sealed class SwapTeleporterSystem : EntitySystem
             return;
 
         var hasPaired = TryGetPaired(ent, ent.Comp, out var paired);
-        ent.Comp.Key = null;
+        ent.Comp.Key = Guid.Empty.ToString();
         ent.Comp.TeleportTime = null;
         _appearance.SetData(ent, SwapTeleporterVisuals.Linked, false);
         Dirty(ent, ent.Comp);
@@ -265,11 +272,6 @@ public sealed class SwapTeleporterSystem : EntitySystem
         }
     }
 
-    private void OnShutdown(Entity<SwapTeleporterComponent> ent, ref ComponentShutdown args)
-    {
-        //DestroyLink((ent, ent), null); // Not a thing we want in persistence I don't think...
-    }
-
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -287,30 +289,47 @@ public sealed class SwapTeleporterSystem : EntitySystem
         }
     }
 
-    private string GetUniqueBeaconKey() => Guid.NewGuid().ToString("N");
-
     private bool TryGetPaired(EntityUid self, SwapTeleporterComponent component, out EntityUid paired, bool nullifyUnpaired = false)
     {
         paired = default!;
 
-        if (component.Key == null) return false;
+        if (component.Key == Guid.Empty.ToString()) return false;
 
-        var query = EntityQueryEnumerator<SwapTeleporterComponent>();
-
-        while (query.MoveNext(out var id, out var comp))
+        if (_pid.TryResolveId(self, component.Key, out var target))
         {
-            if (id == self) continue;
-            if (comp.Key != component.Key) continue;
-
-            paired = id;
+            paired = target;
             return true;
         }
 
         if (nullifyUnpaired)
         {
-            component.Key = null; // Removes the key if a pair isn't found
+            component.Key = Guid.Empty.ToString(); // Removes the key if a pair isn't found
             Dirty(self, component);
         }
         return false;
+    }
+
+    private void MigrateKeys(Entity<SwapTeleporterComponent> ent)
+    {
+        var enumerator = EntityQueryEnumerator<SwapTeleporterComponent>();
+        var entId = _pid.EnsureId(ent);
+        while (enumerator.MoveNext(out var uid, out var tp))
+        {
+            if (tp.Key != ent.Comp.Key || ent.Owner == uid) continue;
+            if (HasComp<PersistentIdentifierComponent>(uid))
+            {
+                ent.Comp.Key = Guid.Empty.ToString();
+                Dirty(ent);
+                return;
+            }
+
+            EnsureComp<PersistentIdentifierComponent>(uid, out var pairedIdComp);
+
+            _pid.ResetId((uid, pairedIdComp), out ent.Comp.Key);
+            tp.Key = entId;
+            Dirty(uid, tp);
+            Dirty(ent);
+            return;
+        }
     }
 }

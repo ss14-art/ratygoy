@@ -19,7 +19,7 @@ public sealed partial class PersistentIdentifierSystem : EntitySystem
     /// <summary>
     /// Gets the ID from a <see cref="PersistentIdentifierComponent"/>. Generates a new ID if one is not present.
     /// </summary>
-    public Guid EnsureId(Entity<PersistentIdentifierComponent> ent)
+    public string EnsureId(Entity<PersistentIdentifierComponent> ent)
     {
         if (ent.Comp.IdInit) return ent.Comp.Id;
 
@@ -27,11 +27,17 @@ public sealed partial class PersistentIdentifierSystem : EntitySystem
         return id;
     }
 
+    public string EnsureId(EntityUid uid)
+    {
+        EnsureComp<PersistentIdentifierComponent>(uid, out var idComp);
+        return EnsureId((uid, idComp));
+    }
+
     /// <summary>
     /// Attempts to retrieve the ID from a <see cref="PersistentIdentifierComponent"/>.<br/><br/>
     /// Return true if the component has an ID, otherwise false.
     /// </summary>
-    public bool TryGetId(Entity<PersistentIdentifierComponent> ent, out Guid id)
+    public bool TryGetId(Entity<PersistentIdentifierComponent> ent, out string id)
     {
         if (ent.Comp.IdInit)
         {
@@ -39,17 +45,17 @@ public sealed partial class PersistentIdentifierSystem : EntitySystem
             return true;
         }
 
-        id = Guid.Empty;
+        id = Guid.Empty.ToString();
         return false;
     }
 
     /// <summary>
     /// Resets the ID of a <see cref="PersistentIdentifierComponent"/> to a new valid GUID.
     /// </summary>
-    public void ResetId(Entity<PersistentIdentifierComponent> ent, out Guid id, PersistentIdChangeBehaviour behaviour = PersistentIdChangeBehaviour.Sever)
+    public void ResetId(Entity<PersistentIdentifierComponent> ent, out string id, PersistentIdChangeBehaviour behaviour = PersistentIdChangeBehaviour.Sever)
     {
         var oldId = ent.Comp.Id;
-        ent.Comp.Id = Guid.NewGuid();
+        ent.Comp.Id = Guid.NewGuid().ToString();
         id = ent.Comp.Id;
         Dirty(ent);
 
@@ -57,26 +63,29 @@ public sealed partial class PersistentIdentifierSystem : EntitySystem
         RaiseLocalEvent(ref ev);
     }
 
+    public void ResetId(Entity<PersistentIdentifierComponent> ent, PersistentIdChangeBehaviour behaviour = PersistentIdChangeBehaviour.Sever)
+        => ResetId(ent, out _, behaviour);
+
     /// <summary>
     /// Empties the ID of a <see cref="PersistentIdentifierComponent"/>.
     /// </summary>
     public void ClearId(Entity<PersistentIdentifierComponent> ent, PersistentIdChangeBehaviour behaviour = PersistentIdChangeBehaviour.Sever)
     {
-        if (ent.Comp.Id == Guid.Empty) return;
+        if (!ent.Comp.IdInit) return;
 
         var oldId = ent.Comp.Id;
-        ent.Comp.Id = Guid.Empty;
+        ent.Comp.Id = Guid.Empty.ToString();
         Dirty(ent);
 
         var ev = new PersistentIdChangedEvent(ent, oldId, ent.Comp.Id, behaviour);
         RaiseLocalEvent(ref ev);
     }
 
-    public bool OverrideId(Entity<PersistentIdentifierComponent> ent, Guid id, PersistentIdChangeBehaviour behaviour = PersistentIdChangeBehaviour.Sever)
+    public bool OverrideId(Entity<PersistentIdentifierComponent> ent, string id, PersistentIdChangeBehaviour behaviour = PersistentIdChangeBehaviour.Sever)
     {
         if (id == ent.Comp.Id) return false;
 
-        if (id == Guid.Empty)
+        if (id == Guid.Empty.ToString())
         {
             _log.GetSawmill(Sawmill).Warning("Unable to override ID to empty. Use ClearId instead.");
             return false;
@@ -103,7 +112,7 @@ public sealed partial class PersistentIdentifierSystem : EntitySystem
     /// <returns>True if able to successfully resolve the id, otherwise false.</returns>
     public bool TryResolveId(
         EntityUid sourceUid,
-        Guid id,
+        string id,
         out Entity<PersistentIdentifierComponent> ent,
         Func<Entity<PersistentIdentifierComponent>, bool>? conditional = null,
         bool useFetchIfFalse = true, bool ensureRegistry = true)
@@ -140,7 +149,7 @@ public sealed partial class PersistentIdentifierSystem : EntitySystem
     /// <param name="registry">An optional registry to register valid ids to when found. Improves speed of future searches.</param>
     /// <returns></returns>
     public bool TryFetchId(
-        Guid id,
+        string id,
         out Entity<PersistentIdentifierComponent> ent,
         Func<Entity<PersistentIdentifierComponent>, bool>? conditional = null,
         PersistentIdRegisterComponent? registry = null)
@@ -158,9 +167,12 @@ public sealed partial class PersistentIdentifierSystem : EntitySystem
             {
                 ent = (uid, idComp);
                 if (registry is not null) registry.TryRegister(ent, _entMan);
+                _log.GetSawmill(Sawmill).Info($"Entity found: {uid}");
                 return true;
             }
         }
+
+        _log.GetSawmill(Sawmill).Warning($"Unable to find entity with matching pid.");
         return false;
     }
 
@@ -169,7 +181,7 @@ public sealed partial class PersistentIdentifierSystem : EntitySystem
         // Culling will remove the existing reference as the new ID will not match that stored in the key.
         register.CullStaleEntities(_entMan);
 
-        if (args.NewId == Guid.Empty || args.NewId == args.OldId || args.Behaviour == PersistentIdChangeBehaviour.Sever)
+        if (args.NewId == Guid.Empty.ToString() || args.NewId == args.OldId || args.Behaviour == PersistentIdChangeBehaviour.Sever)
             return; // Nothing more to do.
 
         if (!TryComp<PersistentIdentifierComponent>(args.Uid, out var idComp))
