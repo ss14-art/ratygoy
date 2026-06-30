@@ -53,8 +53,8 @@ public sealed partial class SwapTeleporterComponent : Component
     public EntityWhitelist TeleporterWhitelist = new();
 
     [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadOnly)]
-    public string? Key = null;
-    public bool HasKey => Key != null;
+    public string Key = Guid.Empty.ToString();
+    public bool HasKey => Key != Guid.Empty.ToString();
 }
 
 [Serializable, NetSerializable]

@@ -32,7 +32,7 @@ public sealed partial class DeviceLinkSourceComponent : Component
     /// The list of source to sink ports for each linked sink entity for easier managing of links
     /// </summary>
     [DataField]
-    public Dictionary<EntityUid, HashSet<(ProtoId<SourcePortPrototype> Source, ProtoId<SinkPortPrototype> Sink)>> LinkedPorts = new();
+    public Dictionary<string, HashSet<(ProtoId<SourcePortPrototype> Source, ProtoId<SinkPortPrototype> Sink)>> LinkedPorts = new();
 
     /// <summary>
     ///     Limits the range devices can be linked across.

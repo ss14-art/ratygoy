@@ -27,7 +27,8 @@ public sealed class DeviceLinkSystem : SharedDeviceLinkSystem
 
         foreach (var sinkUid in sinks)
         {
-            if (!sourceComponent.LinkedPorts.TryGetValue(sinkUid, out var links))
+            var id = Pid.EnsureId(sinkUid);
+            if (!sourceComponent.LinkedPorts.TryGetValue(id, out var links))
                 continue;
 
             if (!TryComp<DeviceLinkSinkComponent>(sinkUid, out var sinkComponent))

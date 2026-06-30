@@ -14,6 +14,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
+using Content.Shared._Persistence14.PersistentIdentifier;
 
 namespace Content.Shared.Salvage.Fulton;
 
@@ -32,6 +33,7 @@ public abstract partial class SharedFultonSystem : EntitySystem
     [Dependency] private readonly SharedStackSystem _stack = default!;
     [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private PersistentIdentifierSystem _pid = default!;
 
     public static readonly EntProtoId EffectProto = "FultonEffect";
     protected static readonly Vector2 EffectOffset = Vector2.Zero;
@@ -116,10 +118,9 @@ public abstract partial class SharedFultonSystem : EntitySystem
         // Interact with Beacon
         if (TryComp<FultonBeaconComponent>(args.Target, out var beacon))
         {
-            EnsureBeaconKey(beacon); // Make sure the beacon has a key before linking.
             if (!_foldable.IsFolded(args.Target.Value))
             {
-                component.BeaconKey = beacon.Key;
+                component.BeaconKey = _pid.EnsureId(args.Target.Value);
                 Audio.PlayPredicted(beacon.LinkSound, uid, args.User);
                 _popup.PopupClient(Loc.GetString("fulton-linked"), uid, args.User);
             }
@@ -171,7 +172,8 @@ public abstract partial class SharedFultonSystem : EntitySystem
     {
         if (args.User == null) // Only reset if a player folded the beacon. Prevents roundstart from resetting beacon link.
             return;
-        component.Key = null;
+        EnsureComp<PersistentIdentifierComponent>(uid, out var idComp);
+        _pid.ResetId((uid, idComp), PersistentIdChangeBehaviour.Sever);
     }
 
     private void OnFultonSplit(EntityUid uid, FultonComponent component, ref StackSplitEvent args)
@@ -238,7 +240,7 @@ public abstract partial class SharedFultonSystem : EntitySystem
 
         while (query.MoveNext(out var uid, out var beaconComp))
         {
-            if (beaconComp.Key == key)
+            if (_pid.EnsureId(uid) == key)
             {
                 beacon = uid;
                 return true;
@@ -246,13 +248,5 @@ public abstract partial class SharedFultonSystem : EntitySystem
         }
 
         return false;
-    }
-
-    protected virtual void EnsureBeaconKey(FultonBeaconComponent beacon)
-    {
-        if (beacon.Key != null)
-            return;
-
-        beacon.Key = Guid.NewGuid().ToString();
     }
 }
