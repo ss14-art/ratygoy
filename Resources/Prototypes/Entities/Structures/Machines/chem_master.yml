@@ -94,6 +94,7 @@
     solutions:
       buffer:
         canReact: false
+        maxVol: MaxValue
   - type: DumpableSolution
     solution: buffer
     unlimited: true
