@@ -593,3 +593,16 @@
         reagents:
         - ReagentId: DexalinPlus
           Quantity: 200
+
+- type: entity
+  parent: Jug
+  name: bluespace jug
+  id: BluespaceJug
+  description: An advanced jug that utilizes bluespace tech to hold an illogical amount of liquid.
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        drink:
+          maxVol: 1000
+    - type: Sprite
+      sprite: Objects/Specific/Chemistry/jug_bluespace.rsi

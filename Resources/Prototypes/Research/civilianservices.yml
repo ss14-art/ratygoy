@@ -250,6 +250,7 @@
   recipeUnlocks:
   - BluespaceBeaker
   - SyringeBluespace
+  - BluespaceJug
 
 - type: technology
   id: LauncherSyringe

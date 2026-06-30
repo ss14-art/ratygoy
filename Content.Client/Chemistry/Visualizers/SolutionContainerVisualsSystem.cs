@@ -168,6 +168,11 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
             var heldPrefix = item.HeldPrefix == null ? "inhand-" : $"{item.HeldPrefix}-inhand-";
             var key = heldPrefix + args.Location.ToString().ToLowerInvariant() + component.InHandsFillBaseName + closestFillSprite;
 
+            // Make sure the sprite state is valid so we don't show a big red error message
+            // This saves us from having to make fill level sprites for every possible slot the item could be in (including pockets).
+            if (!TryComp<SpriteComponent>(uid, out var sprite) || sprite.BaseRSI == null || !sprite.BaseRSI.TryGetState(key, out _))
+                return;
+
             layer.State = key;
 
             if (component.ChangeColor && AppearanceSystem.TryGetData<Color>(uid, SolutionContainerVisuals.Color, out var color, appearance))

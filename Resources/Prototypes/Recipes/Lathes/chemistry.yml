@@ -55,6 +55,16 @@
     Silver: 50
 
 - type: latheRecipe
+  id: BluespaceJug
+  result: BluespaceJug
+  completetime: 2
+  materials:
+    Steel: 500
+    Plastic: 500
+    Plasma: 150
+    Silver: 50
+
+- type: latheRecipe
   id: SyringeBluespace
   result: SyringeBluespace
   completetime: 2
