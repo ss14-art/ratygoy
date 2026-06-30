@@ -26,6 +26,7 @@
           - Door
         tags:
           - StorageCounter
+          - AirAlarm
           - Structure
     - type: PhysicalComposition
       materialComposition:
