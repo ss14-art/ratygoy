@@ -1,20 +1,19 @@
-<Document>
-  # Access Control
-  This guide will explain how access works in The Threshold. Access is what restricts locked doors, crates, lockers and machines.
-  The access configurator is the central tool to setting up access.
-  <Box>
-    <GuideEntityEmbed Entity="GridConfigurator" Caption="Access Configurator"/>
-  </Box>
-
-
-  ## Faction Access
-  In the Threshold access must be either personal or factional.
-  Every faction has an opportunity to create and manage their own accesses and a machine which is connected to a faction will choose from those accesses.
-  The accesses your ID provides with a faction is determined by the assignment you have with that faction.
-
-  ## Personal Access
-  Machines in the Threshold also have the opportunity to use personal access. Personal access is a list of names which can access the machine.
-  Any ID with a name that matches an entry in the Personal Access list will be allowed access.
-
+<Document>  
+  # Контроль доступа  
+  Это руководство объяснит, как работает доступ в Пороге. Доступ ограничивает использование закрытых дверей, ящиков, шкафчиков и машин.  
+  Конфигуратор доступа — основной инструмент для настройки доступа.  
+  <Box>  
+    <GuideEntityEmbed Entity="GridConfigurator" Caption="Конфигуратор доступа"/>  
+  </Box>  
+  
+  
+  ## Фракционный доступ  
+  В Пороге доступ должен быть либо личным, либо фракционным.  
+  Каждая фракция может создавать собственные уровни доступа и управлять ими, а машина, подключённая к фракции, будет использовать доступы этой фракции.  
+  Доступы, которые предоставляет ваш ID в рамках фракции, определяются вашей должностью в этой фракции.  
+  
+  ## Личный доступ  
+  Машины в Пороге также могут использовать личный доступ. Личный доступ — это список имён, которым разрешено использовать машину.  
+  Любой ID с именем, совпадающим с записью в списке личного доступа, получит разрешение.  
+  
 </Document>
-

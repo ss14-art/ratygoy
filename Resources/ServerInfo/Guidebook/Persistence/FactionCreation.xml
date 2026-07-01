@@ -1,23 +1,23 @@
-<Document>
-  # Faction Creation
-  This guide will explain how to start your own faction from scratch!
-
-  ## Faction Genesis Device
-  To begin with you need to obtain a faction genesis device. These are found in a crate called the "faction starter crate" sold through cargo imports in the Nanotrasen trade station.
-  <Box>
-    <GuideEntityEmbed Entity="StationGenesisDevice" Caption="Faction Genesis Device"/>
-  </Box>
-
-  Once you have a faction genesis device you can use it to create the faction. The ID inserted into the faction genesis device will determine who the first faction owner will be. Faction owners always have all access to the faction.
-  The faction starter crate also contains other machines you will need to setup the new faction including a grid configurator, a faction tagger and the faction modification computer.
-
-  <Box>
-    <GuideEntityEmbed Entity="GridConfigurator" Caption="Grid Configurator"/>
-    <GuideEntityEmbed Entity="StationTagger" Caption="Faction Tagger"/>
-  </Box>
+<Document>  
+  # Создание фракции  
+  Это руководство объяснит, как создать собственную фракцию с нуля!  
   
-  If you are starting the faction on an unclaimed grid you can use the grid configurator to claim the grid for your faction. Any machines built on a grid that your faction controls will default to being under the control of your faction.
-  If you are using a grid that is under someone elses control you can use the faction tagger to tag machines as being under the control of your faction. Deploy the faction modification computer somewhere and tag it to your faction if necessary.
-
-  The faction is now created and can be managed through the faction modification computer.
+  ## Устройство генезиса фракции  
+  Для начала вам нужно получить устройство генезиса фракции. Оно находится в ящике «стартовый набор фракции», который продаётся через карго-импорт на торговой станции Nanotrasen.  
+  <Box>  
+    <GuideEntityEmbed Entity="StationGenesisDevice" Caption="Устройство генезиса фракции"/>  
+  </Box>  
+  
+  Получив устройство генезиса фракции, вы можете использовать его для создания фракции. ID-карточка, вставленная в устройство, определит первого владельца фракции. Владельцы фракции всегда имеют полный доступ к ней.  
+  Стартовый набор фракции также содержит другие машины, необходимые для настройки новой фракции: конфигуратор грида, тегер фракции и компьютер модификации фракции.  
+  
+  <Box>  
+    <GuideEntityEmbed Entity="GridConfigurator" Caption="Конфигуратор грида"/>  
+    <GuideEntityEmbed Entity="StationTagger" Caption="Тегер фракции"/>  
+  </Box>  
+    
+  Если вы создаёте фракцию на незанятом гриде, используйте конфигуратор грида, чтобы заявить права на него для своей фракции. Все машины, построенные на гриде вашей фракции, по умолчанию будут считаться принадлежащими ей.  
+  Если вы используете грид, находящийся под чьим-то контролем, используйте тегер фракции, чтобы пометить машины как принадлежащие вашей фракции. Разверните компьютер модификации фракции и при необходимости пометьте его тегером.  
+  
+  Фракция создана и теперь ею можно управлять через компьютер модификации фракции.  
 </Document>

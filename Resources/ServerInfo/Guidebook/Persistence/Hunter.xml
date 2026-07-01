@@ -1,17 +1,16 @@
-<Document>
-  # Bounty Hunter & Assassin
-  This guide will explain the network objectives that members of the Bounty Hunter and Assassin networks will get
-  Bounty Hunters and Assassins get the same objectives, but will not target members of their own network.
-
-  ## The Hunt
-  If possible you will be assigned a target from a different network to hunt.
-  You must extract their secret phrase.
-  If they wont give it to you voluntarily you can use a secret phrase extractor to force it out.
-  You can obtain a secret phrase extractor from any autolathe.
-  The target must be handcuffed or in a critical or dead state for the extractor to work.
-
-  ## The Hunter Becomes the Hunted
-  If you are hunted by someone you can enter their secret phrase to compromise them, receiving the reward and neutralizing the hunt.
-
+<Document>  
+  # Охотник за головами и Убийца  
+  Это руководство объяснит сетевые задания, которые получают члены сетей Охотников за головами и Убийц.  
+  Охотники за головами и Убийцы получают одинаковые задания, но не будут нацеливаться на членов своей собственной сети.  
+  
+  ## Охота  
+  По возможности вам будет назначена цель из другой сети для охоты.  
+  Вы должны извлечь их секретную фразу.  
+  Если они не дадут её добровольно, вы можете использовать экстрактор секретных фраз, чтобы принудительно её получить.  
+  Экстрактор секретных фраз можно получить на любом автолате.  
+  Цель должна быть в наручниках или находиться в критическом или мёртвом состоянии, чтобы экстрактор сработал.  
+  
+  ## Охотник становится добычей  
+  Если на вас охотятся, вы можете ввести секретную фразу охотника, чтобы скомпрометировать его, получить награду и нейтрализовать охоту.  
+  
 </Document>
-

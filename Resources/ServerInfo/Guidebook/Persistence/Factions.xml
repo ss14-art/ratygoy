@@ -1,9 +1,9 @@
-<Document>
-  # Factions
-  [color=#f39f27]Factions[/color] are used to create accesses and assignments for members of the faction to use. Factions can claim a grid and all anchored machines on that grid will be considered owned by that faction unless the machine has been specifically tagged by a different faction.
-    <Box>
-      <GuideEntityEmbed Entity="StationGenesisDevice" Caption="Faction Genesis Device"/>
-      <GuideEntityEmbed Entity="GridConfigurator" Caption="Grid Configurator"/>
-      <GuideEntityEmbed Entity="StationTagger" Caption="Faction Tagger"/>
-    </Box>
+<Document>  
+  # Фракции  
+  [color=#f39f27]Фракции[/color] используются для создания доступов и должностей для членов фракции. Фракции могут заявить права на грид, и все закреплённые машины на этом гриде будут считаться принадлежащими данной фракции, если только машина не была специально помечена другой фракцией.  
+    <Box>  
+      <GuideEntityEmbed Entity="StationGenesisDevice" Caption="Устройство генезиса фракции"/>  
+      <GuideEntityEmbed Entity="GridConfigurator" Caption="Конфигуратор грида"/>  
+      <GuideEntityEmbed Entity="StationTagger" Caption="Тегер фракции"/>  
+    </Box>  
 </Document>

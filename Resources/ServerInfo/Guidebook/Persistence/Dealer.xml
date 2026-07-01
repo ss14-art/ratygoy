@@ -1,20 +1,19 @@
-<Document>
-  # Dealer
-  This guide will explain the network objectives that members of the Dealer network will get
-
-  ## Criminal Bounties
-  You will get a bounty to export a certain type of reagent, gas or item to an occupied Trade Station.
-  The first step is using a cargo telepad to teleport a bounty manifest to you. You must be next to the telepad.
-  For reagent bounties you must attach the label to a liquid tank.
-  For gas bounties attach the label to a canister.
-  For solid item bounties attach the label to a crate.
-
-  Export the bounty to the specified station.
-
-  Beware of local authorities as these bounties will hurt local infrastructure and raise Sector Chaos.
-
-  ## The Hunter Becomes the Hunted
-  If you are hunted by someone you can enter their secret phrase to compromise them, receiving the reward and neutralizing the hunt.
-
+<Document>  
+  # Делец  
+  Это руководство объяснит сетевые задания, которые получают члены сети Дельцов.  
+  
+  ## Криминальные баунти  
+  Вы получите баунти на экспорт определённого реагента, газа или предмета на занятую торговую станцию.  
+  Первый шаг — использовать грузовой телепад, чтобы телепортировать к себе манифест баунти. Вы должны находиться рядом с телепадом.  
+  Для баунти на реагент прикрепите ярлык к жидкостному баку.  
+  Для баунти на газ прикрепите ярлык к канистре.  
+  Для баунти на твёрдые предметы прикрепите ярлык к ящику.  
+  
+  Экспортируйте баунти на указанную станцию.  
+  
+  Остерегайтесь местных властей — эти баунти наносят вред местной инфраструктуре и повышают Хаос сектора.  
+  
+  ## Охотник становится добычей  
+  Если на вас охотятся, вы можете ввести секретную фразу охотника, чтобы скомпрометировать его, получить награду и нейтрализовать охоту.  
+  
 </Document>
-

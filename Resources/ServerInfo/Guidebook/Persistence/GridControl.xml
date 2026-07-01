@@ -1,31 +1,30 @@
-<Document>
-  # Grid Control
-  This guide will explain how to control grids in The Threshold. Whoever controls a grid has access control over any of the machines of that grid.
-  <Box>
-    <GuideEntityEmbed Entity="GridConfigurator" Caption="Grid Configurator"/>
-  </Box>
-
-
-  ## Claiming a Grid
-  With a grid configurator you can attempt to claim a grid.
-  Grids can be claimed by individuals or factions and both have a limit to the amount of tiles they can control and they can purchase upgrades to increase.
-  In order to claim a grid for a faction you must either be a faction owner or have an assignment with the CLAIM core function.
-
-
-  ## Controling Your Grid
-  Any grid can be unclaimed by any grid configurator unless it has one or more active grid control computers built on it.
-  Building at least one grid control computer is crucial to preventing your grid from being hijacked.
-  Grid control computers can be destroyed or switched off so they must be secured.
-
-  ## Anchor Key
-  Small grids can be parked safely in a deep-space pocket of The Threshold. An anchor key can be used to reserve space for the grid in deep-space and initiate the FTL process.
-  Sentient passengers will be ejected before a grid parks in deep space as sentient creatures cannot survive FTL in the Threshold.
-
-  Once a grid is parked the same anchor key that parked it can be used to retrieve it from deep space.
-  Only the anchor key that parked a grid can be used to retrieve it and if the key is lost the grid is lost forever.
-
-  Anchor keys can be used to protect grids from bandits while you sleep in cryo.
+<Document>  
+  # Управление гридом  
+  Это руководство объяснит, как управлять гридами в Пороге. Тот, кто контролирует грид, имеет контроль доступа над всеми машинами этого грида.  
+  <Box>  
+    <GuideEntityEmbed Entity="GridConfigurator" Caption="Конфигуратор грида"/>  
+  </Box>  
   
-
+  
+  ## Захват грида  
+  С помощью конфигуратора грида вы можете попытаться захватить грид.  
+  Гриды могут быть захвачены физическими лицами или фракциями, и у обоих есть лимит на количество тайлов, которые они могут контролировать — его можно увеличить, купив улучшения.  
+  Чтобы захватить грид для фракции, вы должны быть владельцем фракции или иметь должность с основной функцией CLAIM.  
+  
+  
+  ## Контроль над своим гридом  
+  Любой грид может быть захвачен любым конфигуратором грида, если на нём не установлен хотя бы один активный компьютер управления гридом.  
+  Установка хотя бы одного компьютера управления гридом крайне важна для защиты от захвата.  
+  Компьютеры управления гридом можно уничтожить или отключить, поэтому их необходимо защищать.  
+  
+  ## Якорный ключ  
+  Небольшие гриды можно безопасно припарковать в кармане глубокого космоса Порога. Якорный ключ используется для резервирования места для грида в глубоком космосе и запуска процесса FTL.  
+  Разумные пассажиры будут выброшены перед парковкой грида в глубоком космосе, так как разумные существа не могут пережить FTL в Пороге.  
+  
+  После парковки грида тот же якорный ключ, которым он был припаркован, можно использовать для его извлечения из глубокого космоса.  
+  Только якорный ключ, которым был припаркован грид, может быть использован для его извлечения — если ключ потерян, грид потерян навсегда.  
+  
+  Якорные ключи можно использовать для защиты гридов от бандитов, пока вы спите в крио.  
+    
+  
 </Document>
-

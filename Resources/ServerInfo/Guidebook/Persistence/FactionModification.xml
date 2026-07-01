@@ -1,68 +1,68 @@
-<Document>
-  # Faction Modification
-  This guide will explain how to manage your faction through the faction modification computer.
-
-  ## General
-  The first tab controls a variety of high-level settings for your faction.
-
-  ### Change Faction Name
-  Change the display name that your faction uses.
-
-  ### Current Faction Owners
-  Allows you to view and remove existing faction owners or add a new owner. Only faction owners can operate the faction modification computer. Only extremely trused characters should be made a faction owner. Faction owners have all-access and full control over the faction they own.
-
-  ### Create Access / Delete Access
-  Your faction can create and delete accesses which can be assigned to machines using an access configurator.
-
-  ### Import/Export/Sales Tax
-  Your faction can set tax rates which are collected from individuals and other factions. If your faction controls a trade station import tax is applied to any purchases made through the trade station and export tax is applied to any sale made through the trade station including bounty completion.
-  Sales tax is applied to invoices that are printed on a grid your faction controls.
-
-  ## Assignments
-  The assignments tab allows you to create assignments for your crew members to hold. Assignments are an important way of distributing accesses to members of your faction.
-
-  ### Select / Create / Delete Assignment
-  Assignments can be selected from the dropdown at the top of the menu and new assignments can be named and created using the button at the bottom of the menu.
-
-  ### Assignment Name
-  The display name of an assignment can be changed at any time.
+<Document>  
+  # Управление фракцией  
+  Это руководство объяснит, как управлять фракцией через компьютер модификации фракции.  
   
-  ### Wage
-  Members of your faction can clock in and will be paid this wage every twenty minutes they remain clocked in.
-
-  ### Command Level
-  Members of your faction will not be able to reassign themselves or anyone with an equal or higher command level than themselves.
-  For example, if a "Captain" assignment has a command level of 100 and a "HoP" assignment has a command level of 90 then someone holding the HoP assignment will not be able to reassign the Captain or any other HoP and will only be able to reassign those with an assignment that has command level 89 or lower.
-
-  ### Core Functions
-  Core functions control specific functions that the assignment holder may be able to perform.
+  ## Общее  
+  Первая вкладка управляет различными высокоуровневыми настройками вашей фракции.  
   
-  The "REASSIGN" core function allows those with the assignment to reassign those with a lower command level through the ID card computer.
+  ### Изменить название фракции  
+  Изменить отображаемое название вашей фракции.  
   
-  The "SPEND" core function allows those with the assignment to spend funds out of the faction account.
+  ### Текущие владельцы фракции  
+  Позволяет просматривать и удалять существующих владельцев фракции или добавлять нового. Только владельцы фракции могут работать с компьютером модификации фракции. Владельцем фракции следует делать только крайне доверенных персонажей. Владельцы фракции имеют полный доступ и полный контроль над ней.  
   
-  The "CLAIM" core function allows those with the assignment to claim and unclaim grids for the faction.
-
-  ### Access
-  Accesses that your faction has can be toggled on and off for the assignment.
-
-  ## Radio
-  Headset radios can target your faction and will use the access their wearer has to determine what channels they can hear and transmit over.
-  In the radio menu you can determine which radio channels are available to your faction and what access they require.
-
-  ### Selected Channel
-  Choose which channel you are currently editing.
-
-  ### Channel Status
-  Whether or not this channel can be used when targeting your faction
-
-  ### Access
-  Which accesses must be held in order for a headset to recieve and broadcast on this channel. If no accesses are selected the channel will be available for everyone.
-
-
-  ## Upgrade
-  Here you can upgrade your faction to increase the tile limit. The tile limit is the maximum amount of tiles your faction can control.
+  ### Создать доступ / Удалить доступ  
+  Ваша фракция может создавать и удалять уровни доступа, которые можно назначать машинам с помощью конфигуратора доступа.  
   
-  At faction level three your faction gains the ability to claim a trade station.
+  ### Налог на импорт / экспорт / продажи  
+  Ваша фракция может устанавливать налоговые ставки, взимаемые с физических лиц и других фракций. Если ваша фракция контролирует торговую станцию, налог на импорт применяется ко всем покупкам через неё, а налог на экспорт — ко всем продажам, включая выполнение баунти.  
+  Налог на продажи применяется к инвойсам, распечатанным на гриде вашей фракции.  
   
+  ## Должности  
+  Вкладка должностей позволяет создавать должности для членов вашего экипажа. Должности — важный способ распределения доступов среди членов фракции.  
+  
+  ### Выбрать / Создать / Удалить должность  
+  Должности можно выбирать из выпадающего списка вверху меню, а новые — называть и создавать кнопкой внизу меню.  
+  
+  ### Название должности  
+  Отображаемое название должности можно изменить в любое время.  
+    
+  ### Зарплата  
+  Члены вашей фракции могут отмечаться на работе и будут получать эту зарплату каждые двадцать минут, пока остаются на смене.  
+  
+  ### Уровень командования  
+  Члены вашей фракции не смогут переназначать себя или кого-либо с равным или более высоким уровнем командования.  
+  Например, если должность «Капитан» имеет уровень командования 100, а «ГоП» — 90, то обладатель должности ГоП не сможет переназначить Капитана или другого ГоПа и сможет переназначать только тех, чья должность имеет уровень командования 89 или ниже.  
+  
+  ### Основные функции  
+  Основные функции управляют конкретными действиями, которые может выполнять обладатель должности.  
+    
+  Функция «REASSIGN» позволяет обладателям должности переназначать тех, у кого уровень командования ниже, через компьютер ID-карточек.  
+    
+  Функция «SPEND» позволяет обладателям должности тратить средства со счёта фракции.  
+    
+  Функция «CLAIM» позволяет обладателям должности заявлять права на гриды и снимать их для фракции.  
+  
+  ### Доступ  
+  Доступы вашей фракции можно включать и отключать для каждой должности.  
+  
+  ## Радио  
+  Гарнитуры могут быть настроены на вашу фракцию и будут использовать доступы носителя для определения каналов, которые он может слышать и на которых может передавать.  
+  В меню радио вы можете определить, какие радиоканалы доступны вашей фракции и какой доступ для них требуется.  
+  
+  ### Выбранный канал  
+  Выберите канал, который вы сейчас редактируете.  
+  
+  ### Статус канала  
+  Включён ли этот канал при настройке на вашу фракцию.  
+  
+  ### Доступ  
+  Какие доступы необходимо иметь, чтобы гарнитура могла принимать и передавать на этом канале. Если доступы не выбраны, канал будет доступен всем.  
+  
+  
+  ## Улучшение  
+  Здесь вы можете улучшить фракцию, чтобы увеличить лимит тайлов. Лимит тайлов — максимальное количество тайлов, которое может контролировать ваша фракция.  
+    
+  На третьем уровне фракции вы получаете возможность захватить торговую станцию.  
+    
 </Document>
