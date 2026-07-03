@@ -1,0 +1,46 @@
+---
+description: Routes edits by path to the matching .agents/skills/ss14-*.md domain skill.
+globs:
+  - "**/Audio/**"
+  - "**/Atmos/**"
+  - "**/Movement/**"
+  - "**/Physics/**"
+  - "**/NPC/**"
+  - "**/BUI/**"
+  - "**/EUI/**"
+  - "**/Sprite/**"
+  - "**/Overlays/**"
+  - "**/*.xaml"
+  - "**/*.swsl"
+  - "Content.Server.Database/**"
+  - "Resources/**"
+alwaysApply: false
+---
+
+# Path → skill router
+
+When editing a file matching one of these areas, read the matching domain skill
+in `.agents/skills/` **before** writing. The root `AGENTS.md` is the master
+router; this is a quick path-based reminder.
+
+| Path / subsystem | Skill to read |
+|---|---|
+| `**/Audio/**`, `Resources/Audio/**`, sound playback | `.agents/skills/ss14-audio.md` |
+| `**/Atmos/**`, gas/pipe/reaction/tile atmosphere | `.agents/skills/ss14-atmos.md` |
+| `**/Movement/**`, `**/Physics/**`, transform, coords, collision | `.agents/skills/ss14-transform-physics.md` |
+| PVs / entity visibility / "distant player can't see X" | `.agents/skills/ss14-pvs.md` |
+| `**/BUI/**`, machine/console UIs | `.agents/skills/ss14-ui-bui.md` |
+| `*.xaml`, client menus/windows | `.agents/skills/ss14-ui-xaml.md` |
+| `**/EUI/**`, admin/player panels (non-entity) | `.agents/skills/ss14-ui-eui.md` |
+| `**/Sprite/**`, `**/Overlays/**`, `*.swsl`, `GenericVisualizer` | `.agents/skills/ss14-sprite-overlays-shaders.md` |
+| `Content.Server.Database/**`, migrations, persistence | `.agents/skills/ss14-databases-migrations.md` |
+| `**/NPC/**`, HTN, pathfinding, mob behavior | `.agents/skills/ss14-npc-ai.md` |
+| `Resources/Prototypes/**`, `Resources/Locale/**` | `.agents/skills/ss14-prototype-basics.md` |
+
+Onboarding (read if unsure of basics): `ss14-ecs-basics.md`,
+`ss14-client-server-shared.md`, `ss14-common-api-patterns.md`,
+`ss14-debugging-workflow.md`, `ss14-porting-and-licensing.md`,
+`ss14-ai-workflow.md`, `ss14-examples.md`.
+
+Rules (mandatory, short) all live in `.agents/rules/`. Always read
+`ss14-code-placement.md`, `ss14-fork-editing.md`, `ss14-ai-workflow.md`.

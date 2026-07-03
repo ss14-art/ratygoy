@@ -1,0 +1,15 @@
+# Note: ast-grep has a CSharp parser but no first-class XAML parser. We use the
+# Generic language (regex-based) to scan .xaml for literal Text attributes that
+# are not {Loc ...} references. This is intentionally broad — expect some noise
+# (e.g. intentionally-non-localized debug labels) and refine after live PRs.
+id: ss14-xaml-literal-text
+language: Generic
+rule:
+  regex: (Text|Title)\s*=\s*"([^{"][^"]*)"
+  constraints: {}
+message: |
+  [ss14] XAML attribute uses a literal string. Use `{Loc fork-...}` and define
+  the key in `Resources/Locale/en-US/_Art/*.ftl`. Player-facing XAML must be
+  localized (see `.agents/rules/ss14-localization.md`,
+  `.agents/skills/ss14-ui-xaml.md`).
+severity: warning

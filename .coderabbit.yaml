@@ -1,0 +1,165 @@
+# CodeRabbit configuration for the hakumai (ss14-art) SS14 fork monorepo
+#
+# The canonical AI instructions live in `.agents/` (rules + skills). This file
+# makes CodeRabbit apply the same rules. path_instructions point CodeRabbit at
+# the canon; ast-grep rules catch mechanical SS14 anti-patterns.
+#
+# Status: assertive profile, tuned for this monorepo. Path instructions and
+# ast-grep rules are expected to be re-tuned after a few live PRs (see the
+# project plan's "CodeRabbit hardening" section).
+
+language: en-US
+
+reviews:
+  profile: assertive
+
+  # What to review / not review. Exclude engine (RobustToolbox — upstream, not
+  # ours), build output, generated/submodule noise, and binary assets.
+  path_filters:
+    - "**/*.cs"
+    - "**/*.xaml"
+    - "**/*.yml"
+    - "**/*.yaml"
+    - "**/*.ftl"
+    - "**/*.swsl"
+    - "!RobustToolbox/**"
+    - "!**/bin/**"
+    - "!**/obj/**"
+    - "!**/*.Designer.cs"
+    - "!**/*.png"
+    - "!**/*.ogg"
+    - "!**/*.rsi/*.json"
+    - "!.git/**"
+    - "!BuildFiles/**"
+
+  # Path-specific review guidance. These mirror the subtree AGENTS.md and
+  # .agents/rules. Keep them pointers, not copies.
+  path_instructions:
+    # --- Universal: any code change ---
+    - path: "**/*.cs"
+      instructions: |
+        This is the hakumai SS14 fork. Fork code lives ONLY in `_Art` folders
+        (Content.{Shared,Server,Client}/_Art, Resources/**/_Art). Everything
+        outside `_Art` is UPSTREAM (read-mostly).
+        FLAG if the PR:
+        - Adds fork-only systems/components/files OUTSIDE `_Art`.
+        - Edits a file OUTSIDE `_Art` without a `// ss14-art edit` marker on
+          EVERY changed line (single-line `// ss14-art edit`, or block
+          `// ss14-art edit start` ... `// ss14-art edit end`).
+        - Edits anything under `RobustToolbox/` (engine — must be escalated,
+          not quietly edited).
+        - Puts predicted player-interaction logic only in Content.Server (it
+          belongs in Content.Shared for prediction).
+        - Mutates replicated component state without `Dirty(uid, comp)`.
+        - Sends an `EntityUid` (not `NetEntity`) in a `[Serializable,
+          NetSerializable]` BUI message/state field.
+        - Shows a raw English string literal to a player (popup/entity
+          name/UI text) instead of `Loc.GetString`/locale keys.
+        - Uses raw `string` ids where `ProtoId<T>`/`EntProtoId<T>` exists.
+        See `.agents/rules/` for the full rules and `.agents/skills/` for
+        subsystem skills. Do NOT suggest building/running the project.
+
+    # --- Content.Shared ---
+    - path: "Content.Shared/**"
+      instructions: |
+        Runs on BOTH client and server. Prediction, networked components, BUI
+        messages/state (`[Serializable, NetSerializable]`), shared events.
+        FLAG `using Content.Server.*` or `using Content.Client.*` here (Shared
+        can't see them). FLAG BUI messages/state not marked
+        `[Serializable, NetSerializable]`. FLAG networked components defined
+        elsewhere. See `.agents/rules/ss14-client-server-shared.md`,
+        `ss14-networking.md`, `ss14-prediction.md`, and subtree
+        `Content.Shared/AGENTS.md`.
+
+    # --- Content.Server ---
+    - path: "Content.Server/**"
+      instructions: |
+        Server only. Authority: DB, spawn truth, admin, round logic, BUI
+        owning systems. FLAG `using Content.Client.*`. FLAG a server-only
+        handler for a player action (not predicted). FLAG BUI messages/state
+        placed here instead of Content.Shared. DB schema changes need
+        migrations in BOTH Postgres and Sqlite. See
+        `.agents/rules/ss14-client-server-shared.md`,
+        `ss14-databases-migrations.md`, and subtree `Content.Server/AGENTS.md`.
+
+    # --- Content.Client ---
+    - path: "Content.Client/**"
+      instructions: |
+        Client only. XAML menus, BUI subclasses, overlays, sprites/shaders.
+        FLAG networked components defined here (must be in Shared). FLAG
+        `FindChild` in XAML code-behind (use `[GenerateTypedNameReferences]` +
+        `Name=`). FLAG literal `Text="..."` in XAML (use `{Loc fork-...}`).
+        FLAG network messages sent directly from a menu (the menu raises
+        Actions; the BUI sends messages). FLAG `using Content.Server.*`. See
+        `.agents/rules/ss14-localization.md`, `.agents/skills/ss14-ui-xaml.md`,
+        `ss14-ui-bui.md`, and subtree `Content.Client/AGENTS.md`.
+
+    # --- Resources ---
+    - path: "Resources/**/*.yml"
+      instructions: |
+        Prototypes + data. FLAG entity `name:`/`description:` that are raw
+        English text (must be locale keys, provided in an `_Art` `.ftl`).
+        FLAG fork prototypes OUTSIDE `Resources/Prototypes/_Art/`. FLAG fork
+        sprites/audio on upstream paths (fork art under `_Art`). FLAG an entity
+        with a BUI missing its `type: UserInterface` `interfaces:` map. See
+        `.agents/rules/ss14-localization.md`,
+        `.agents/skills/ss14-prototype-basics.md`, and subtree
+        `Resources/AGENTS.md`.
+
+    - path: "Resources/**/*.ftl"
+      instructions: |
+        Locale. Fork keys should be `fork-`-prefixed and kebab-case, under
+        `Resources/Locale/en-US/_Art/`. FLAG raw text leaking into C#/XAML
+        that has no key here. See `.agents/rules/ss14-localization.md`.
+
+    # --- Tests ---
+    - path: "Content.Tests/**"
+      instructions: |
+        Unit tests (NUnit, no server/client pair). Fork tests under `_Art`.
+        FLAG a unit test that hand-rolls EntityManager for sim-dependent logic
+        (that belongs in Content.IntegrationTests). See subtree
+        `Content.Tests/AGENTS.md`.
+
+    - path: "Content.IntegrationTests/**"
+      instructions: |
+        Server+client integration tests via PoolManager; `InteractionTest`
+        base for interaction scenarios. Fork tests under `Tests/_Art`. FLAG
+        tests depending on wall-clock timing (use tick stepping). FLAG
+        test-prototype ids colliding with upstream (use `[TestPrototypes]`
+        with fork-named ids). See subtree `Content.IntegrationTests/AGENTS.md`.
+
+  # ast-grep rules for mechanical SS14 anti-patterns.
+  tools:
+    ast-grep:
+      rule_dirs:
+        - ".ast-grep/rules"
+      essential_rules: false
+
+  auto_review:
+    enabled: true
+    auto_incremental_review: true
+    auto_pause_after_reviewed_commits: 5
+    drafts: false
+    base_branches:
+      - "master"
+    ignore_title_keywords:
+      - "WIP"
+      - "DO NOT REVIEW"
+
+  finishing_touches:
+    docstrings:
+      enabled: false
+    unit_tests:
+      enabled: false
+    simplify:
+      enabled: true
+
+  pre_merge_checks:
+    title:
+      mode: warning
+      requirements: "Title should be concise; describe the gameplay/feature change."
+    description:
+      mode: warning
+
+chat:
+  auto_reply: false

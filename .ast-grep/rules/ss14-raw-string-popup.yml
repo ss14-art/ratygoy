@@ -1,0 +1,19 @@
+id: ss14-raw-string-popup
+language: CSharp
+rule:
+  pattern: $POPUP.$METHOD($MSG, $$$REST)
+  constraints:
+    POPUP:
+      regex: ^_popup$
+    METHOD:
+      regex: ^(PopupEntity|PopupClient|PopupServer|PopupCursor|PopupCoordinates)$
+    MSG:
+      # first arg is a plain string literal (starts with a quote), not a
+      # Loc.GetString(...) call
+      regex: ^['"]+
+message: |
+  [ss14] Player-facing popup uses a raw string literal. Use
+  `Loc.GetString("fork-...", ("arg", value))` and define the key in
+  `Resources/Locale/en-US/_Art/*.ftl`. Raw English in a popup is a review
+  blocker (see `.agents/rules/ss14-localization.md`).
+severity: warning
