@@ -8,10 +8,10 @@ public sealed partial class CCVars
         YearOffset = CVarDef.Create("lore.year_offset", 120, CVar.ARCHIVE);
 
     public static readonly CVarDef<int>
-        AcceptDeathTime = CVarDef.Create("acceptdeath.time", 60 * 30, CVar.ARCHIVE);
+        AcceptDeathTime = CVarDef.Create("acceptdeath.time", 60 * 15, CVar.ARCHIVE);
 
     public static readonly CVarDef<int>
-        AcceptDeathSOSTime = CVarDef.Create("acceptdeath.sostime", 60 * 30, CVar.ARCHIVE);
+        AcceptDeathSOSTime = CVarDef.Create("acceptdeath.sostime", 60 * 15, CVar.ARCHIVE);
 
     public static readonly CVarDef<int>
         GridClaimPersonalMaxTiles = CVarDef.Create("gridconfig.claim_personal_max_tiles", 150, CVar.ARCHIVE);

@@ -35,5 +35,15 @@
       - id: GyroscopeFlatpack
       - id: PortableGeneratorJrPacmanFlatpack
       - id: ShuttleConsoleCircuitboard
-
-
+      - id: CableMVStack
+      - id: CableHVStack
+      - id: CableApcStack
+      - id: ClothingBeltUtilityFilled
+      - id: SheetSteel
+      - id: SheetGlass
+      - id: ClothingOuterHardsuitEVA
+      - id: ClothingHeadHelmetEVALarge
+      - id: OxygenTankFilled
+      - id: NitrogenTankFilled
+      - id: ClothingMaskBreath
+      - id: APCElectronics

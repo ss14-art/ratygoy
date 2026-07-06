@@ -1,0 +1,22 @@
+- type: entity
+  parent: BaseItem
+  id: ShuttleStarterKitArt
+  name: shuttle starter kit voucher
+  description: Redeem this to receive a shuttle starter kit crate.
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/boxes.rsi
+    layers:
+      - state: tote-0
+        map: ["enum.StorageFillLayers.Fill"]
+      - state: circuit
+  - type: Item
+    sprite: Objects/Storage/boxes.rsi
+    size: Large
+    shape:
+  - type: SpawnItemsOnUse
+    items:
+    - id: CrateEngineeringShuttleStarterKit
+    uses: 1
+    sound:
+      path: /Audio/Effects/unwrap.ogg
