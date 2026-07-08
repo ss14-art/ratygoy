@@ -33,7 +33,12 @@ public sealed partial class ProfilePreviewSpriteView
     /// <summary>
     /// Loads the profile onto a dummy entity.
     /// </summary>
-    private void LoadHumanoidEntity(HumanoidCharacterProfile? humanoid, JobPrototype? job, bool jobClothes)
+    // SS14-Art-Edit start
+    private void LoadHumanoidEntity(HumanoidCharacterProfile? humanoid,
+        JobPrototype? job,
+        bool jobClothes,
+        Dictionary<string, string>? persistentEquipment = null)
+    // SS14-Art-Edit end
     {
         EntProtoId? previewEntity = null;
         if (humanoid != null && jobClothes)
@@ -59,18 +64,30 @@ public sealed partial class ProfilePreviewSpriteView
             PreviewDummy = EntMan.SpawnEntity(_prototypeManager.Index(HumanoidCharacterProfile.DefaultSpecies).DollPrototype, MapCoordinates.Nullspace);
         }
 
+// SS14-Art-Edit start
         if (humanoid != null && jobClothes)
         {
             DebugTools.Assert(job != null);
 
-            GiveDummyJobClothes(humanoid, job);
-
-            if (_prototypeManager.HasIndex<RoleLoadoutPrototype>(LoadoutSystem.GetJobPrototype(job.ID)))
+            if (persistentEquipment != null)
             {
-                var loadout = humanoid.GetLoadoutOrDefault(LoadoutSystem.GetJobPrototype(job.ID), _playerManager.LocalSession, humanoid.Species, EntMan, _prototypeManager);
-                GiveDummyLoadout(loadout);
+                // The character already has a saved body somewhere (e.g. asleep in
+                // cryostorage) - show what they're actually wearing instead of the
+                // default job loadout.
+                GiveDummyPersistentClothes(persistentEquipment);
+            }
+            else
+            {
+                GiveDummyJobClothes(humanoid, job);
+
+                if (_prototypeManager.HasIndex<RoleLoadoutPrototype>(LoadoutSystem.GetJobPrototype(job.ID)))
+                {
+                    var loadout = humanoid.GetLoadoutOrDefault(LoadoutSystem.GetJobPrototype(job.ID), _playerManager.LocalSession, humanoid.Species, EntMan, _prototypeManager);
+                    GiveDummyLoadout(loadout);
+                }
             }
         }
+// SS14-Art-Edit end
     }
 
     /// <summary>
@@ -101,6 +118,34 @@ public sealed partial class ProfilePreviewSpriteView
             }
         }
     }
+
+    // SS14-Art-Edit start
+    /// <summary>
+    /// Equips the dummy with whatever the player's persistent (saved) body actually
+    /// has in each inventory slot right now, replacing anything already equipped there.
+    /// </summary>
+    private void GiveDummyPersistentClothes(Dictionary<string, string> equipment)
+    {
+        var inventorySys = EntMan.System<InventorySystem>();
+        if (!inventorySys.TryGetSlots(PreviewDummy, out var slots))
+            return;
+
+        foreach (var slot in slots)
+        {
+            if (inventorySys.TryUnequip(PreviewDummy, slot.Name, out var unequippedItem, silent: true, force: true, reparent: false))
+                EntMan.DeleteEntity(unequippedItem.Value);
+
+            if (!equipment.TryGetValue(slot.Name, out var itemProto) || itemProto == string.Empty)
+                continue;
+
+            if (!_prototypeManager.HasIndex<EntityPrototype>(itemProto))
+                continue;
+
+            var item = EntMan.SpawnEntity(itemProto, MapCoordinates.Nullspace);
+            inventorySys.TryEquip(PreviewDummy, item, slot.Name, true, true);
+        }
+    }
+    // SS14-Art-Edit end
 
     /// <summary>
     /// Applies the specified job's clothes to the dummy.

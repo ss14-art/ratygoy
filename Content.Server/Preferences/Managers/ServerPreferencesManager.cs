@@ -11,6 +11,13 @@ using Content.Shared.Preferences;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
 using Content.Shared.Traits;
+// SS14-Art-Edit start
+using Content.Shared._Art.Preferences;
+using Content.Shared.Inventory;
+using Robust.Shared.ContentPack;
+using Robust.Shared.EntitySerialization.Systems;
+using Robust.Shared.GameObjects;
+// SS14-Art-Edit end
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
@@ -44,6 +51,9 @@ namespace Content.Server.Preferences.Managers
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly MarkingManager _marking = default!;
         [Dependency] private readonly ISerializationManager _serialization = default!;
+        // SS14-Art-Edit start
+        [Dependency] private readonly IResourceManager _resourceManager = default!;
+        // SS14-Art-Edit end
 
         // Cache player prefs on the server so we don't need as much async hell related to them.
         private readonly Dictionary<NetUserId, PlayerPrefData> _cachedPlayerPrefs = new();
@@ -62,6 +72,10 @@ namespace Content.Server.Preferences.Managers
             _netManager.RegisterNetMessage<MsgJoinAsCharacter>(HandleJoinAsCharacterMessage);
             _netManager.RegisterNetMessage<MsgDeleteCharacter>(HandleDeleteCharacterMessage);
             _netManager.RegisterNetMessage<MsgUpdateConstructionFavorites>(HandleUpdateConstructionFavoritesMessage);
+            // SS14-Art-Edit start
+            _netManager.RegisterNetMessage<MsgRequestPersistentAppearance>(HandleRequestPersistentAppearanceMessage);
+            _netManager.RegisterNetMessage<MsgPersistentAppearance>();
+            // SS14-Art-Edit end
             _sawmill = _log.GetSawmill("prefs");
         }
 
@@ -476,6 +490,73 @@ namespace Content.Server.Preferences.Managers
                 await _db.SaveConstructionFavoritesAsync(userId, validatedList);
             }
         }
+
+        // SS14-Art-Edit start
+        /// <summary>
+        /// Handles a client asking what their persistent (saved) body for a given character
+        /// slot is currently wearing, so the character editor preview can show the real outfit
+        /// (e.g. the spacesuit they went into cryosleep in) instead of the default job clothes.
+        /// </summary>
+        private void HandleRequestPersistentAppearanceMessage(MsgRequestPersistentAppearance message)
+        {
+            var userId = message.MsgChannel.UserId;
+            var response = new MsgPersistentAppearance { Slot = message.Slot };
+
+            if (!_cachedPlayerPrefs.TryGetValue(userId, out var prefsData) ||
+                prefsData.Prefs == null ||
+                !prefsData.Prefs.Characters.TryGetValue(message.Slot, out var profile))
+            {
+                _netManager.ServerSendMessage(response, message.MsgChannel);
+                return;
+            }
+
+            // Same path convention used by CryostorageSystem/GameTicker when saving a
+            // player's body: "{userId}]{characterName}".
+            var saveFilePath = new ResPath($"/{userId}]{profile.Name}");
+
+            if (!_resourceManager.UserData.Exists(saveFilePath))
+            {
+                _netManager.ServerSendMessage(response, message.MsgChannel);
+                return;
+            }
+
+            var loader = _entityManager.System<MapLoaderSystem>();
+            if (!loader.TryLoadEntity(saveFilePath, out var loaded))
+            {
+                _netManager.ServerSendMessage(response, message.MsgChannel);
+                return;
+            }
+
+            var uid = loaded.Value.Owner;
+            try
+            {
+                var inventory = _entityManager.System<InventorySystem>();
+                if (inventory.TryGetSlots(uid, out var slotDefs))
+                {
+                    foreach (var slotDef in slotDefs)
+                    {
+                        if (!inventory.TryGetSlotContainer(uid, slotDef.Name, out var container, out _))
+                            continue;
+
+                        if (container.ContainedEntity is not { } item)
+                            continue;
+
+                        if (_entityManager.GetComponentOrNull<MetaDataComponent>(item)?.EntityPrototype is { } proto)
+                            response.EquippedItems[slotDef.Name] = proto.ID;
+                    }
+                }
+
+                response.Found = true;
+            }
+            finally
+            {
+                // We only wanted to peek at what it's wearing - get rid of the temporary entity.
+                _entityManager.DeleteEntity(uid);
+            }
+
+            _netManager.ServerSendMessage(response, message.MsgChannel);
+        }
+        // SS14-Art-Edit end
 
         // Should only be called via UserDbDataManager.
         public async Task LoadData(ICommonSession session, CancellationToken cancel)

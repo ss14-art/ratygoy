@@ -161,13 +161,13 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
     /// <summary>
     /// Refreshes the character preview in the lobby chat.
     /// </summary>
-    private void RefreshLobbyPreview()
+    public void RefreshLobbyPreview()
     {
         if (PreviewPanel == null)
             return;
 
-        // Get selected character, load it, then set it
         var character = _preferencesManager.Preferences?.SelectedCharacter;
+        var slot = _preferencesManager.Preferences?.SelectedCharacterIndex;
 
         if (character is not HumanoidCharacterProfile humanoid)
         {
@@ -176,7 +176,14 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
             return;
         }
 
-        PreviewPanel.ProfilePreviewSpriteView.LoadPreview(humanoid);
+        // SS14-Art-Edit start
+        Dictionary<string, string>? equipment = null;
+        if (slot != null && _characterSetup != null)
+            equipment = _characterSetup.GetPersistentEquipment(slot.Value);
+        
+        PreviewPanel.ProfilePreviewSpriteView.LoadPreview(humanoid, persistentEquipment: equipment);
+        // SS14-Art-Edit end
+        
         PreviewPanel.SetSummaryText(humanoid.Summary);
     }
 

@@ -26,22 +26,45 @@ public sealed partial class CharacterPickerButton : ContainerButton
     /// </summary>
     public event Action? OnDeletePressed;
 
+    // SS14-Art-Edit start
+    /// <summary>
+    /// The character slot index for this button.
+    /// </summary>
+    public int Slot { get; private set; }
+
+    private HumanoidCharacterProfile? _profile;
+    private Dictionary<string, string>? _persistentEquipment;
+    // SS14-Art-Edit end
+
+    // SS14-Art-Edit start
     public CharacterPickerButton(
         IPrototypeManager prototypeManager,
         ISharedPlayerManager playerMan,
         ButtonGroup group,
         HumanoidCharacterProfile? profile,
-        bool isSelected)
+        bool isSelected,
+        int slot,
+        Dictionary<string, string>? persistentEquipment = null)
+    // SS14-Art-Edit end
     {
         RobustXamlLoader.Load(this);
         AddStyleClass(StyleClassButton);
         ToggleMode = true;
         Group = group;
+        
+        // SS14-Art-Edit start
+        Slot = slot;
+        _profile = profile;
+        _persistentEquipment = persistentEquipment;
+        // SS14-Art-Edit end
+        
         var name = "Empty Slot";
         if (profile != null)
         {
             name = profile.Name;
-            View.LoadPreview(profile);
+            // SS14-Art-Edit start
+            View.LoadPreview(profile, persistentEquipment: persistentEquipment);
+            // SS14-Art-Edit end
         }
         var description = name;
 
@@ -63,4 +86,21 @@ public sealed partial class CharacterPickerButton : ContainerButton
             ConfirmDeleteButton.Visible = true;
         };
     }
+
+    // SS14-Art-Edit start
+    /// <summary>
+    /// Updates the preview with a new profile and/or equipment.
+    /// </summary>
+    public void UpdatePreview(HumanoidCharacterProfile profile, Dictionary<string, string>? persistentEquipment = null)
+    {
+        _profile = profile;
+        _persistentEquipment = persistentEquipment;
+        View.LoadPreview(profile, persistentEquipment: persistentEquipment);
+        
+        if (profile != null)
+        {
+            DescriptionLabel.Text = profile.Name;
+        }
+    }
+    // SS14-Art-Edit end
 }

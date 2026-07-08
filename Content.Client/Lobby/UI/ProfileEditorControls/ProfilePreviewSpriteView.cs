@@ -27,12 +27,17 @@ public sealed partial class ProfilePreviewSpriteView : SpriteView
     /// <remarks>
     /// This is expensive so not recommended to run if you have a slider.
     /// </remarks>
-    public void LoadPreview(HumanoidCharacterProfile profile, JobPrototype? jobOverride = null, bool showClothes = true)
+    // SS14-Art-Edit start
+    public void LoadPreview(HumanoidCharacterProfile profile,
+        JobPrototype? jobOverride = null,
+        bool showClothes = true,
+        Dictionary<string, string>? persistentEquipment = null)
+    // SS14-Art-Edit end
     {
         EntMan.DeleteEntity(PreviewDummy);
         PreviewDummy = EntityUid.Invalid;
 
-        LoadHumanoidEntity(profile, jobOverride, showClothes);
+        LoadHumanoidEntity(profile, jobOverride, showClothes, persistentEquipment); // SS14-Art-Edit: persistentEquipment
 
         SetEntity(PreviewDummy);
         SetName(profile.Name);

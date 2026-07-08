@@ -1,5 +1,6 @@
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Preferences;
+using Content.Shared._Art.Preferences;
 using Robust.Client;
 using Robust.Client.Player;
 using Robust.Shared.Network;
@@ -23,6 +24,10 @@ namespace Content.Client.Lobby
 
         public event Action? OnServerDataLoaded;
 
+        // SS14-Art-Edit start
+        public event Action<MsgPersistentAppearance>? PersistentAppearanceReceived;
+        // SS14-Art-Edit end
+
         public GameSettings Settings { get; private set; } = default!;
         public PlayerPreferences Preferences { get; private set; } = default!;
 
@@ -33,6 +38,10 @@ namespace Content.Client.Lobby
             _netManager.RegisterNetMessage<MsgSelectCharacter>();
             _netManager.RegisterNetMessage<MsgDeleteCharacter>();
             _netManager.RegisterNetMessage<MsgFinalizeCharacter>();
+            // SS14-Art-Edit start
+            _netManager.RegisterNetMessage<MsgRequestPersistentAppearance>();
+            _netManager.RegisterNetMessage<MsgPersistentAppearance>(HandlePersistentAppearance);
+            // SS14-Art-Edit end
             _baseClient.RunLevelChanged += BaseClientOnRunLevelChanged;
         }
 
@@ -147,5 +156,17 @@ namespace Content.Client.Lobby
             };
             _netManager.ClientSendMessage(msg);
         }
+
+        // SS14-Art-Edit start
+        public void RequestPersistentAppearance(int slot)
+        {
+            _netManager.ClientSendMessage(new MsgRequestPersistentAppearance { Slot = slot });
+        }
+
+        private void HandlePersistentAppearance(MsgPersistentAppearance message)
+        {
+            PersistentAppearanceReceived?.Invoke(message);
+        }
+        // SS14-Art-Edit end
     }
 }
