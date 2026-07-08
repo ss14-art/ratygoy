@@ -59,6 +59,10 @@
       tableId: XenoArtifactDefaultEffectsMainHandheld
     deepEffectsTable: !type:NestedSelector
       tableId: XenoArtifactDefaultEffectsDeepHandheld
+  # 👇 НОВЫЙ КОМПОНЕНТ - ТРАНСФОРМАЦИЯ ПРЕДМЕТОВ ВОКРУГ
+  - type: ArtifactTransformation
+    searchRadius: 3.0
+    spawnablePrototypes: []  # Пустой список = случайные прототипы из игры
 
 - type: entity
   parent: BaseXenoArtifactItem

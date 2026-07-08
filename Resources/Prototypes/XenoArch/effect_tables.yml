@@ -62,6 +62,8 @@
   id: XenoArtifactEffectsRoot
   table: !type:GroupSelector
     children:
+    - id: ChaosTransformArtifact # Наш Хаос для обычных артефактов на 0 глубине
+      weight: 1000.0
     - id: XenoArtifactAnomalySpawn
       weight: 1.0
     - id: XenoArtifactArtifactSpawn
@@ -225,6 +227,8 @@
   id: XenoArtifactEffectsMain
   table: !type:GroupSelector
     children:
+    - id: ChaosTransformArtifact # Наш Хаос для обычных артефактов на 1-2 глубине
+      weight: 1000.0
     - id: XenoArtifactAnomalySpawn
       weight: 1.0
     - id: XenoArtifactArtifactSpawn
@@ -388,6 +392,8 @@
   id: XenoArtifactEffectsDeep
   table: !type:GroupSelector
     children:
+    - id: ChaosTransformArtifact # Наш Хаос для обычных артефактов на большой глубине
+      weight: 1000.0
     - id: XenoArtifactAnomalySpawn
       weight: 3.0
     - id: XenoArtifactArtifactSpawn
@@ -551,6 +557,8 @@
   id: XenoArtifactEffectsRootHandheldOnly
   table: !type:GroupSelector
     children:
+    - id: ChaosTransformArtifact # Наш Хаос для ручных артефактов на 0 глубине
+      weight: 1000.0
     - id: XenoArtifactSpeedUp
       weight: 3.0
     - id: XenoArtifactToolCrowbar
@@ -576,6 +584,8 @@
   id: XenoArtifactEffectsMainHandheldOnly
   table: !type:GroupSelector
     children:
+    - id: ChaosTransformArtifact # Наш Хаос для ручных артефактов на 1-2 глубине
+      weight: 1000.0
     - id: XenoArtifactSpeedUp
       weight: 10.0
     - id: XenoArtifactToolCrowbar
@@ -601,6 +611,8 @@
   id: XenoArtifactEffectsDeepHandheldOnly
   table: !type:GroupSelector
     children:
+    - id: ChaosTransformArtifact # Наш Хаос для ручных артефактов на большой глубине
+      weight: 1000.0
     - id: XenoArtifactSpeedUp
       weight: 10.0
     - id: XenoArtifactToolCrowbar

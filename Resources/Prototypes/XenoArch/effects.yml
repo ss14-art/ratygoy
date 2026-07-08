@@ -1754,3 +1754,34 @@
   - type: XAECreateGas
     gases:
       CarbonDioxide: 300
+
+- type: entity
+  id: ChaosTransformArtifact
+  parent: BaseXenoArtifactEffect
+  name: эффект хаотичной трансформации
+  description: Трансформирует ближайшие обьекты.
+  components:
+  - type: ArtifactRandomTransformation
+    Radius: 6
+    TransformationPercentRatio: 0.35
+    
+    # Блеклист по подстрокам в ID 
+    PrototypeIdBlacklistSubstrings:
+      - Admeme
+      - debug
+      - singularity
+      - tesla
+      - Admin
+      
+    # Блеклист по суффиксам
+    PrototypeSuffixBlacklistSubstrings:
+      - Admeme
+      - debug
+      - Admin
+      
+    # Сюда можно вписать конкретные ID компонентов, которые нельзя спавнить
+    ComponentBlacklist:
+      - Singularity
+      - TeslaEnergyBall
+      - MapGrid 
+      - SpawnPoint

@@ -1757,3 +1757,6 @@
   
 - type: Tag
   id: EggSpider
+
+- type: Tag
+  id: ArtifactTransmutable
