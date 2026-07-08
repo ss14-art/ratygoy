@@ -4,7 +4,7 @@
     children:
     - !type:NestedSelector
       tableId: XenoArtifactEffectsRoot
-      weight: 397.0 # Total weights of the table so distribution remains even
+      weight: 400.0 # Изменено с 397.0 (добавлен вес эффекта 3.0)
     # Eventually full size only artifact effects will go here
 
 - type: entityTable
@@ -13,7 +13,7 @@
     children:
     - !type:NestedSelector
       tableId: XenoArtifactEffectsMain
-      weight: 425.0 # Total weights of the table so distribution remains even
+      weight: 431.0 # Изменено с 425.0 (добавлен вес эффекта 6.0)
     # Eventually full size only artifact effects will go here
 
 - type: entityTable
@@ -22,7 +22,7 @@
     children:
     - !type:NestedSelector
       tableId: XenoArtifactEffectsDeep
-      weight: 337.0 # Total weights of the table so distribution remains even
+      weight: 346.0 # Изменено с 337.0 (добавлен вес эффекта 9.0)
     # Eventually full size only artifact effects will go here
 
 - type: entityTable
@@ -31,7 +31,7 @@
     children:
     - !type:NestedSelector
       tableId: XenoArtifactEffectsRoot
-      weight: 397.0 # Total weights of the table so distribution remains even
+      weight: 400.0 # Изменено с 397.0
     - !type:NestedSelector
       tableId: XenoArtifactEffectsRootHandheldOnly
       weight: 54.0 # Total weights of the table so distribution remains even
@@ -42,7 +42,7 @@
     children:
     - !type:NestedSelector
       tableId: XenoArtifactEffectsMain
-      weight: 425.0 # Total weights of the table so distribution remains even
+      weight: 431.0 # Изменено с 425.0
     - !type:NestedSelector
       tableId: XenoArtifactEffectsMainHandheldOnly
       weight: 37.0 # Total weights of the table so distribution remains even
@@ -53,7 +53,7 @@
     children:
     - !type:NestedSelector
       tableId: XenoArtifactEffectsDeep
-      weight: 337.0 # Total weights of the table so distribution remains even
+      weight: 346.0 # Изменено с 337.0
     - !type:NestedSelector
       tableId: XenoArtifactEffectsDeepHandheldOnly
       weight: 30.0 # Total weights of the table so distribution remains even
@@ -156,6 +156,8 @@
       weight: 3.0
     - id: XenoArtifactRandomInstrumentSpawn
       weight: 10.0
+    - id: XenoArtifactRandomTransformation # Добавлено сюда
+      weight: 100.0
     - id: XenoArtifactShatterWindows
       weight: 8.0
     - id: XenoArtifactShuffle
@@ -319,6 +321,8 @@
       weight: 8.0
     - id: XenoArtifactRandomInstrumentSpawn
       weight: 8.0
+    - id: XenoArtifactRandomTransformation # Добавлено сюда
+      weight: 100.0
     - id: XenoArtifactShatterWindows
       weight: 3.0
     - id: XenoArtifactShuffle
@@ -482,6 +486,8 @@
       weight: 10.0
     - id: XenoArtifactRandomInstrumentSpawn
       weight: 0.0 # Here for parity
+    - id: XenoArtifactRandomTransformation # Добавлено сюда
+      weight: 100.0
     - id: XenoArtifactShatterWindows
       weight: 3.0
     - id: XenoArtifactShuffle
