@@ -5,3 +5,4 @@
 [submodule "WebUI"]
 	path = WebUI
 	url = https://github.com/ss14-art/web_UI_ss14
+	branch = main
