@@ -45,7 +45,7 @@
   - type: HitscanBasicDamage
     damage:
       types:
-        Heat: 7
+        Heat: 14
 
 - type: entity
   parent: BasicHitscan
@@ -56,7 +56,7 @@
   - type: HitscanBasicDamage
     damage:
       types:
-        Heat: 14
+        Heat: 28
 
 - type: entity
   parent: BasicHitscan
@@ -67,7 +67,7 @@
   - type: HitscanBasicDamage
     damage:
       types:
-        Heat: 17
+        Heat: 34
 
 - type: entity
   parent: BasicHitscan
@@ -78,7 +78,7 @@
   - type: HitscanBasicDamage
     damage:
       types:
-        Heat: 28
+        Heat: 56
   - type: HitscanBasicVisuals
     muzzleFlash:
       sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
@@ -110,7 +110,7 @@
   - type: HitscanBasicDamage
     damage:
       types:
-        Heat: 10
+        Heat: 30
         Radiation: 10
   - type: HitscanBasicVisuals
     muzzleFlash:
@@ -155,7 +155,7 @@
   - type: HitscanBasicDamage
     damage:
       types:
-        Heat: 45
+        Heat: 67.5
         Structural: 10
   - type: HitscanBasicVisuals
     muzzleFlash:
