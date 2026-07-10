@@ -129,6 +129,9 @@
     <Project Path="RobustToolbox/Robust.Client.IntegrationTests/Robust.Client.IntegrationTests.csproj" />
     <Project Path="RobustToolbox/Robust.Client.Tests/Robust.Client.Tests.csproj" />
     <Project Path="RobustToolbox/Robust.Client/Robust.Client.csproj" />
+    <!-- ss14-art edit start -->
+    <Project Path="RobustToolbox/Robust.Client.WebView/Robust.Client.WebView.csproj" />
+    <!-- ss14-art edit end -->
     <Project Path="RobustToolbox/Robust.Packaging.Tests/Robust.Packaging.Tests.csproj" />
     <Project Path="RobustToolbox/Robust.Packaging/Robust.Packaging.csproj" />
     <Project Path="RobustToolbox/Robust.Server.IntegrationTests/Robust.Server.IntegrationTests.csproj" />

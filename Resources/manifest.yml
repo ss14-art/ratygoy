@@ -2,4 +2,9 @@
 windowIconSet: /Textures/Logo/icon
 splashLogo: /Textures/Logo/logo.png
 
+# ss14-art edit start
+modules:
+  - Robust.Client.WebView
+# ss14-art edit end
+
 # PJB PLEASE

@@ -20,6 +20,44 @@
   <Import Project="..\RobustToolbox\Imports\Lidgren.props" />
   <Import Project="..\RobustToolbox\Imports\Client.props" />
   <Import Project="..\RobustToolbox\Imports\Shared.props" />
+  <!-- ss14-art edit start -->
+  <Import Project="..\RobustToolbox\Imports\WebView.props" />
+  <!-- ss14-art edit end -->
+
+  <!-- ss14-art edit start: build WebUI production bundle before the client build -->
+  <PropertyGroup>
+    <BuildWebUI Condition="'$(BuildWebUI)' == ''">true</BuildWebUI>
+    <WebUIProjectDir>$([MSBuild]::NormalizePath('$(MSBuildProjectDirectory)', '../WebUI'))</WebUIProjectDir>
+    <WebUIBuildOutput>$([MSBuild]::NormalizePath('$(MSBuildProjectDirectory)', '../Resources/dist/src/interfaces/escape-menu/index.html'))</WebUIBuildOutput>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <WebUIInput Include="$(WebUIProjectDir)/package.json" />
+    <WebUIInput Include="$(WebUIProjectDir)/vite.config.ts" />
+    <WebUIInput Include="$(WebUIProjectDir)/src/**/*" />
+  </ItemGroup>
+
+  <Target Name="BuildWebUI" BeforeTargets="Build" Inputs="@(WebUIInput)" Outputs="$(WebUIBuildOutput)" Condition="$(BuildWebUI) AND Exists('$(WebUIProjectDir)/package.json')">
+    <Exec Command="npm run build" WorkingDirectory="$(WebUIProjectDir)" StandardOutputImportance="normal" StandardErrorImportance="normal" />
+  </Target>
+  <!-- ss14-art edit end -->
+
+  <!-- ss14-art edit start: copy CEF resources next to Robust.Client.WebView.dll for local development -->
+  <PropertyGroup>
+    <WebViewCefSourceDir>$(TargetDir)runtimes\win-x64\native\</WebViewCefSourceDir>
+    <WebViewCefSourceDir Condition="$([MSBuild]::IsOSPlatform('Linux'))">$(TargetDir)runtimes\linux-x64\native\</WebViewCefSourceDir>
+  </PropertyGroup>
+
+  <Target Name="CopyWebViewCefResources" AfterTargets="Build" Condition="Exists('$(WebViewCefSourceDir)cef_resources')">
+    <ItemGroup>
+      <WebViewCefFiles Include="$(WebViewCefSourceDir)cef_resources\**\*" />
+      <WebViewSubprocess Include="$(WebViewCefSourceDir)Robust.Client.WebView.exe" Condition="Exists('$(WebViewCefSourceDir)Robust.Client.WebView.exe')" />
+      <WebViewSubprocess Include="$(WebViewCefSourceDir)Robust.Client.WebView" Condition="Exists('$(WebViewCefSourceDir)Robust.Client.WebView')" />
+    </ItemGroup>
+    <Copy SourceFiles="@(WebViewCefFiles)" DestinationFolder="$(TargetDir)cef_resources\%(RecursiveDir)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(WebViewSubprocess)" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />
+  </Target>
+  <!-- ss14-art edit end -->
 
   <ItemGroup>
     <ProjectReference Include="..\Content.Shared\Content.Shared.csproj" />
