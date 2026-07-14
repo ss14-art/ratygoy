@@ -7,7 +7,6 @@
 **Форк Space Station 14 с уникальными механиками и контентом**
 
 [![Discord](https://img.shields.io/discord/1280958916691361842?style=for-the-badge&logo=discord&logoColor=white&label=Discord&color=%237289da)](https://discord.gg/f7ZCyH4Qf8)
-[![GitHub License](https://img.shields.io/github/license/odleer/ratgore?style=for-the-badge)](./LEGAL.md)
 [![.NET](https://img.shields.io/badge/.NET-10.0-512BD4?&style=for-the-badge)](https://dotnet.microsoft.com/)
 
 </div>
@@ -67,8 +66,8 @@ Scripts/sh/runQuickAll.sh
 
 ## 📜 Лицензия
 
-Код проекта распространяется под лицензией **GNU AGPLv3**. Ассеты имеют различные лицензии (в основном CC-BY-SA 3.0).
+Код проекта распространяется под лицензией **SS14-ART PROJECT LICENSE**. Ассеты имеют различные лицензии (в основном CC-BY-SA 3.0).
 
-Подробную информацию о лицензиях смотрите в файле [LEGAL.md](./LEGAL.md).
+Подробную информацию о лицензиях смотрите в файле [LICENSE.TXT](./LICENSE.TXT).
 
 
