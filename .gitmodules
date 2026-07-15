@@ -2,6 +2,3 @@
 	path = RobustToolbox
 	url = https://github.com/space-wizards/RobustToolbox.git
 	branch = master
-[submodule "WebUI"]
-	path = WebUI
-	url = https://github.com/ss14-art/web_UI_ss14
