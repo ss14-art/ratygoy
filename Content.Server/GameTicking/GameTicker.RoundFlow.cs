@@ -862,7 +862,8 @@ namespace Content.Server.GameTicking
         private void UpdateRoundFlow(float frameTime)
         {
             
-            if (_cfg.GetCVar(CCVars.AutoSaveEnabled) && RunLevel == GameRunLevel.InRound)
+            if (_cfg.GetCVar(CCVars.AutoSaveEnabled) && RunLevel == GameRunLevel.InRound
+				&& _playerManager.PlayerCount > 0) /// Art-edit
             {
                 RoundLengthMetric.Inc(frameTime);
 
