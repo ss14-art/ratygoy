@@ -218,7 +218,8 @@
     shiveringHeatRegulation: 2000
     normalBodyTemperature: 310.15
     thermalRegulationTemperatureThreshold: 2
-#  - type: Perishable # Art-Edit
+  - type: Perishable
+    rotAfter: 360
   - type: Butcherable
     butcheringType: Spike
     spawned:
