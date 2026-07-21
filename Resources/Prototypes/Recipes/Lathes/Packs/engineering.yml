@@ -76,6 +76,7 @@
   id: AdvancedTools
   recipes:
   - RCD
+  - RCDAmmo
   - HCD
   - PowerDrill
   - WelderExperimental
