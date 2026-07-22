@@ -1,0 +1,17 @@
+# Tier 2
+
+- type: technology
+  id: AtmossuitManufacturing
+  name: research-technology-atmos-suit-manufacturing
+  icon:
+    sprite: Clothing/Head/Helmets/eva.rsi
+    state: icon
+  discipline: Industrial
+  tier: 2
+  cost: 62500
+  recipeUnlocks:
+  - Atmossuit
+  - SuitAtmosFire  
+  - HelmetAtmosFire
+  technologyPrerequisites:
+  - EVAManufacturing

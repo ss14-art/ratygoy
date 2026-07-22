@@ -230,7 +230,7 @@
   cost: 62500
   recipeUnlocks:
   - Engineeringsuit
-  - Atmossuit
+  # - Atmossuit # перенесено в тематическую технологию
   - Miningsuit
   technologyPrerequisites:
   - EVAManufacturing

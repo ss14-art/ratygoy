@@ -1,0 +1,22 @@
+# Atmos
+- type: latheRecipe
+  parent: BaseHardsuitRecipe
+  id: SuitAtmosFire
+  result: ClothingOuterSuitAtmosFire
+  materials:
+    Plasteel: 400
+    Plastic: 600
+    Durathread: 700
+  unlockUses: 3
+
+- type: latheRecipe
+  parent: BaseHardsuitRecipe
+  id: HelmetAtmosFire
+  result: ClothingHeadHelmetAtmosFire
+  completetime: 5
+  materials:
+    Glass: 500
+    Plasteel: 200
+    Plastic: 300
+    Durathread: 300
+  unlockUses: 3

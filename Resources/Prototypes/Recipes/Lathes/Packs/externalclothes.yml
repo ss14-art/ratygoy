@@ -5,13 +5,16 @@
   - EVAsuit
   - EVAsuitHelmet
   - Engineeringsuit
-  - Atmossuit
   - Miningsuit
   - Luxuryminingsuit
   - Researchdirectorsuit
   - Chiefengineersuit
   - Captainsuit
   - ClothingHandsGlovesCaptain
+  # add atmos suit
+  - Atmossuit
+  - SuitAtmosFire  
+  - HelmetAtmosFire
 
 - type: latheRecipePack
   id: SecurityHardsuits
